@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">DienMayChoLonMobi</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="logo_dmcl">Logo DMCL</string>
+    <string name="tim_kiem">Tìm kiếm</string>
+    <string name="back">Back</string>
+    <string name="avatar">avatar</string>
+</resources>
