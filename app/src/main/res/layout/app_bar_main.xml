@@ -4,34 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dienmaycholon.dienmaycholonmobi.MainActivity">
+    tools:context="com.dienmaycholon.dienmaycholonmobi.view.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/background_light"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/ToolbarStyle"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="#FBE133"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:contentDescription="@string/logo_dmcl"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                app:srcCompat="@drawable/logo_dmcl" />
-        </android.support.v7.widget.Toolbar>
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ToolbarStyle"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/logo_dmcl"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    app:srcCompat="@drawable/logo_dmcl" />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/searchbar"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -39,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@android:color/holo_orange_dark"
         app:srcCompat="@android:drawable/stat_sys_speakerphone" />
 
 </android.support.design.widget.CoordinatorLayout>

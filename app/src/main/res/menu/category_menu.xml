@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_dientu"
+            android:icon="@drawable/television"
+            android:title="Điện tử" />
+        <item
+            android:id="@+id/nav_dienlanh"
+            android:icon="@drawable/laundry"
+            android:title="Điện lạnh" />
+        <item
+            android:id="@+id/nav_giadung"
+            android:icon="@drawable/vacuum_cleaner"
+            android:title="Gia dụng" />
+        <item
+            android:id="@+id/nav_vienthong"
+            android:icon="@drawable/photo_camera"
+            android:title="Viễn thông" />
+        <item
+            android:id="@+id/nav_mobi"
+            android:icon="@drawable/smartphone"
+            android:title="Di động - Tablet" />
+
+        <item
+            android:id="@+id/nav_noithat"
+            android:icon="@drawable/bedside_table"
+            android:title="Nội thất" />
+
+        <item
+            android:id="@+id/nav_dichvu"
+            android:icon="@drawable/sunbed"
+            android:title="Dịch vụ" />
+    </group>
+</menu>

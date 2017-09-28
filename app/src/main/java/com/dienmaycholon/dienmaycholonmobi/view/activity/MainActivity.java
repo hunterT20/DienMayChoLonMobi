@@ -1,9 +1,10 @@
-package com.dienmaycholon.dienmaycholonmobi;
+package com.dienmaycholon.dienmaycholonmobi.view.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,30 +17,40 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import static com.dienmaycholon.dienmaycholonmobi.R.color.BackgroundNavSub;
+import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.view.adapter.SliderMainAdapter;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView;
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
+    private DrawerLayout drawer;
+    private SliderMainAdapter sliderMainAdapter;
+
+    private ViewPager viewPager;
+    private CircleIndicator circleIndicator;
+
+    int[] img;
+    private static int currentPage = 0;
+    private static int numberPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab = findViewById(R.id.fab);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -47,6 +58,57 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        viewPager = findViewById(R.id.viewPager);
+        circleIndicator = findViewById(R.id.indicator);
+
+        img =  new int[]{R.drawable.slide_1,R.drawable.slide_2,R.drawable.slide_3,R.drawable.slide_4,R.drawable.slide_5,R.drawable.slide_6,R.drawable.slide_7};
+        sliderMainAdapter = new SliderMainAdapter(img, getApplication());
+
+        viewPager.setAdapter(sliderMainAdapter);
+        circleIndicator.setViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    int pageCount = img.length;
+                    if (currentPage == 0) {
+                        viewPager.setCurrentItem(pageCount - 1, false);
+                    } else if (currentPage == pageCount - 1) {
+                        viewPager.setCurrentItem(0, false);
+                    }
+                }
+            }
+        });
+
+        final Handler handler = new Handler();
+        final Runnable update = new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage == numberPage) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+            }
+        };
+
+        Timer swipe = new Timer();
+        swipe.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, 6000, 2000);
     }
 
     @Override
@@ -62,7 +124,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
 
@@ -72,11 +134,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -93,24 +150,20 @@ public class MainActivity extends AppCompatActivity
         final TextView txtvTitleSub = header.findViewById(R.id.txtvTitleSubMenu);
         ImageView btnBackSub = header.findViewById(R.id.btnBackSub);
 
-        if (id == R.id.nav_camera) {
-            navigationView.getMenu().clear();
-            navigationView.inflateMenu(R.menu.main);
-            txtvTitleSub.setText("Danh mục");
-            animationMenu();
-            header_main.setVisibility(View.GONE);
-            header_sub.setVisibility(View.VISIBLE);
-            header.setBackgroundColor(getResources().getColor(R.color.BackgroundNavSub));
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (id){
+            case R.id.nav_home:
+                return true;
+            case R.id.nav_category:
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.category_menu);
+                txtvTitleSub.setText("Danh mục");
+                animationMenu();
+                header_main.setVisibility(View.GONE);
+                header_sub.setVisibility(View.VISIBLE);
+                header.setBackgroundColor(getResources().getColor(R.color.BackgroundNavSub));
+                break;
+            case R.id.nav_chinhanh:
+                break;
         }
 
         btnBackSub.setOnClickListener(new View.OnClickListener() {
