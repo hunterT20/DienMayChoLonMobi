@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.view.IndexFragment;
 import com.dienmaycholon.dienmaycholonmobi.view.adapter.SliderMainAdapter;
 
 import java.util.Timer;
@@ -109,6 +111,8 @@ public class MainActivity extends AppCompatActivity
                 handler.post(update);
             }
         }, 6000, 2000);
+
+        callFragment(new IndexFragment());
     }
 
     @Override
@@ -191,5 +195,12 @@ public class MainActivity extends AppCompatActivity
                 drawer.openDrawer(GravityCompat.START);
             }
         }, 500);
+    }
+
+    public void callFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frmContent, fragment)
+                .commit();
     }
 }

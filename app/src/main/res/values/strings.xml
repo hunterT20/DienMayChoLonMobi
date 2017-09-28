@@ -9,4 +9,7 @@
     <string name="tim_kiem">Tìm kiếm</string>
     <string name="back">Back</string>
     <string name="avatar">avatar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
