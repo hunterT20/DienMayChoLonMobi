@@ -5,34 +5,34 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_dientu"
-            android:icon="@drawable/television"
+            android:id="@+id/nav_category_dientu"
+            android:icon="@drawable/ic_television"
             android:title="Điện tử" />
         <item
-            android:id="@+id/nav_dienlanh"
-            android:icon="@drawable/laundry"
+            android:id="@+id/nav_category_dienlanh"
+            android:icon="@drawable/ic_laundry"
             android:title="Điện lạnh" />
         <item
-            android:id="@+id/nav_giadung"
-            android:icon="@drawable/vacuum_cleaner"
+            android:id="@+id/nav_category_giadung"
+            android:icon="@drawable/ic_vacuum_cleaner"
             android:title="Gia dụng" />
         <item
-            android:id="@+id/nav_vienthong"
-            android:icon="@drawable/photo_camera"
+            android:id="@+id/nav_category_vienthong"
+            android:icon="@drawable/ic_photo_camera"
             android:title="Viễn thông" />
         <item
-            android:id="@+id/nav_mobi"
-            android:icon="@drawable/smartphone"
+            android:id="@+id/nav_category_mobi"
+            android:icon="@drawable/ic_smartphone"
             android:title="Di động - Tablet" />
 
         <item
-            android:id="@+id/nav_noithat"
-            android:icon="@drawable/bedside_table"
+            android:id="@+id/nav_category_noithat"
+            android:icon="@drawable/ic_bedside_table"
             android:title="Nội thất" />
 
         <item
-            android:id="@+id/nav_dichvu"
-            android:icon="@drawable/sunbed"
+            android:id="@+id/nav_category_dichvu"
+            android:icon="@drawable/ic_sunbed"
             android:title="Dịch vụ" />
     </group>
 </menu>

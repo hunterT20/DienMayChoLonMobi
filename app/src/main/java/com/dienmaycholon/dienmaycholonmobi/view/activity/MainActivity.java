@@ -3,9 +3,7 @@ package com.dienmaycholon.dienmaycholonmobi.view.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,13 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.view.IndexFragment;
-import com.dienmaycholon.dienmaycholonmobi.view.adapter.SliderMainAdapter;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import me.relex.circleindicator.CircleIndicator;
+import com.dienmaycholon.dienmaycholonmobi.view.fragment.IndexFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,14 +26,6 @@ public class MainActivity extends AppCompatActivity
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private DrawerLayout drawer;
-    private SliderMainAdapter sliderMainAdapter;
-
-    private ViewPager viewPager;
-    private CircleIndicator circleIndicator;
-
-    int[] img;
-    private static int currentPage = 0;
-    private static int numberPage = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,57 +44,6 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        viewPager = findViewById(R.id.viewPager);
-        circleIndicator = findViewById(R.id.indicator);
-
-        img =  new int[]{R.drawable.slide_1,R.drawable.slide_2,R.drawable.slide_3,R.drawable.slide_4,R.drawable.slide_5,R.drawable.slide_6,R.drawable.slide_7};
-        sliderMainAdapter = new SliderMainAdapter(img, getApplication());
-
-        viewPager.setAdapter(sliderMainAdapter);
-        circleIndicator.setViewPager(viewPager);
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentPage = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    int pageCount = img.length;
-                    if (currentPage == 0) {
-                        viewPager.setCurrentItem(pageCount - 1, false);
-                    } else if (currentPage == pageCount - 1) {
-                        viewPager.setCurrentItem(0, false);
-                    }
-                }
-            }
-        });
-
-        final Handler handler = new Handler();
-        final Runnable update = new Runnable() {
-            @Override
-            public void run() {
-                if (currentPage == numberPage) {
-                    currentPage = 0;
-                }
-                viewPager.setCurrentItem(currentPage++, true);
-            }
-        };
-
-        Timer swipe = new Timer();
-        swipe.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(update);
-            }
-        }, 6000, 2000);
 
         callFragment(new IndexFragment());
     }
@@ -142,6 +75,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    private int level_Menu = 0;
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -155,6 +89,7 @@ public class MainActivity extends AppCompatActivity
         ImageView btnBackSub = header.findViewById(R.id.btnBackSub);
 
         switch (id){
+            //Sự kiện click menu level 0
             case R.id.nav_home:
                 return true;
             case R.id.nav_category:
@@ -165,31 +100,89 @@ public class MainActivity extends AppCompatActivity
                 header_main.setVisibility(View.GONE);
                 header_sub.setVisibility(View.VISIBLE);
                 header.setBackgroundColor(getResources().getColor(R.color.BackgroundNavSub));
+                level_Menu = 1;
                 break;
             case R.id.nav_chinhanh:
                 break;
+            case R.id.nav_notification:
+                break;
+            case R.id.nav_history:
+                break;
+            case R.id.nav_contact:
+                break;
+            case R.id.nav_info:
+                break;
+            case R.id.nav_setting:
+                break;
+
+            //Sự kiện click menu level 1 click
+            case R.id.nav_category_dientu:
+                level_Menu = 2;
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.dientu_category_menu);
+                txtvTitleSub.setText(item.getTitle());
+                animationMenu();
+                break;
+            case R.id.nav_category_dienlanh:
+                level_Menu = 2;
+                navigationView.getMenu().clear();
+                navigationView.inflateMenu(R.menu.dienlanh_category_menu);
+                txtvTitleSub.setText(item.getTitle());
+                animationMenu();
+                break;
+            case R.id.nav_category_giadung:
+                break;
+            case R.id.nav_category_vienthong:
+                break;
+            case R.id.nav_category_mobi:
+                break;
+            case R.id.nav_category_noithat:
+                break;
+            case R.id.nav_category_dichvu:
+                break;
         }
 
+        //Sự kiện click button back trong menu
         btnBackSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigationView.getMenu().clear();
-                navigationView.inflateMenu(R.menu.activity_main_drawer);
-                animationMenu();
-                header_main.setVisibility(View.VISIBLE);
-                header_sub.setVisibility(View.GONE);
-                header.setBackground(getResources().getDrawable(R.drawable.background_nav));
+                /*B1: Nếu level menu == 1 (menu đang ở Danh mục) thì xóa layout menu lv1 và thay bằng menu lv0
+                * B2: Thực hiện animation đóng mở menu, Ẩn Header menu Danh mục, hiện Header menu main
+                * B3: Cuối cùng chuyển biến level_menu về 0*/
+                if (level_Menu == 1){
+                    navigationView.getMenu().clear();
+                    navigationView.inflateMenu(R.menu.activity_main_drawer);
+                    animationMenu();
+                    header_main.setVisibility(View.VISIBLE);
+                    header_sub.setVisibility(View.GONE);
+                    header.setBackground(getResources().getDrawable(R.drawable.background_nav));
+                    level_Menu = 0;
+                }else if (level_Menu == 2){
+                    /*B1: Nếu level menu == 2 (menu đang ở con của Danh mục) thì xóa layout menu lv2 và thay bằng menu Danh mục
+                    * B2: Thực hiện animation đóng mở menu
+                    * B3: Thay giá trị biến level = 1*/
+                    navigationView.getMenu().clear();
+                    navigationView.inflateMenu(R.menu.category_menu);
+                    txtvTitleSub.setText("Danh mục");
+                    animationMenu();
+                    level_Menu = 1;
+                }
         }
         });
 
         return true;
     }
 
+    /**
+     * Khi chuyển level menu sẽ hiển thị đóng => chờ 500ms và mở lại
+     * để làm mượt quá trình chuyển layout menu
+     */
     public void animationMenu(){
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
-        Handler handler = new Handler();handler.postDelayed(new Runnable() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 drawer.openDrawer(GravityCompat.START);
@@ -197,6 +190,11 @@ public class MainActivity extends AppCompatActivity
         }, 500);
     }
 
+    /**
+     *
+     * @param fragment: fragment cần hiển thị để thay thế layout frmContent
+     *                (áp dụng cho Fragment V4)
+     */
     public void callFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
