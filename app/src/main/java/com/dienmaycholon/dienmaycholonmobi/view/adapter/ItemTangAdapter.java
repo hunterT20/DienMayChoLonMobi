@@ -53,58 +53,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof HeaderViewHolder) {
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-            final int[] currentPage = {0};
-            final int numberPage = 0;
-
-            final int[] img =  new int[]{R.drawable.slide_1,R.drawable.slide_2,R.drawable.slide_3,R.drawable.slide_4,R.drawable.slide_5,R.drawable.slide_6,R.drawable.slide_7};
-            SliderMainAdapter sliderMainAdapter = new SliderMainAdapter(img, context);
-
-            headerViewHolder.viewPager.setAdapter(sliderMainAdapter);
-            headerViewHolder.circleIndicator.setViewPager(headerViewHolder.viewPager);
-
-            headerViewHolder.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-                    currentPage[0] = position;
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-                    if (state == ViewPager.SCROLL_STATE_IDLE) {
-                        int pageCount = img.length;
-                        if (currentPage[0] == 0) {
-                            headerViewHolder.viewPager.setCurrentItem(pageCount - 1, false);
-                        } else if (currentPage[0] == pageCount - 1) {
-                            headerViewHolder.viewPager.setCurrentItem(0, false);
-                        }
-                    }
-                }
-            });
-
-            final Handler handler = new Handler();
-            final Runnable update = new Runnable() {
-                @Override
-                public void run() {
-                    if (currentPage[0] == numberPage) {
-                        currentPage[0] = 0;
-                    }
-                    headerViewHolder.viewPager.setCurrentItem(currentPage[0]++, true);
-                }
-            };
-
-            Timer swipe = new Timer();
-            swipe.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    handler.post(update);
-                }
-            }, 6000, 2000);
-
+            setSlider(headerViewHolder);
         }else if(holder instanceof ItemTangViewHolder) {
             ItemTangViewHolder itemTangViewHolder = (ItemTangViewHolder) holder;
             ItemIndex itemIndex = listItems.get(position - 1);
@@ -115,6 +64,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             itemTangViewHolder.txtvTitleTang.setText(itemIndex.getTitle());
             ItemProductAdapter adapter = new ItemProductAdapter(itemIndex.getProductList(), context);
+            adapter.setHasStableIds(true);
             itemTangViewHolder.rcvProductIndex.setAdapter(adapter);
         }
     }
@@ -133,6 +83,60 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private boolean isPositionFooter (int position) {
         return position == listItems.size () + 1;
+    }
+
+    private void setSlider(final HeaderViewHolder headerViewHolder){
+        final int[] currentPage = {0};
+        final int numberPage = 0;
+
+        final int[] img =  new int[]{R.drawable.slide_1,R.drawable.slide_2,R.drawable.slide_3,R.drawable.slide_4,R.drawable.slide_5,R.drawable.slide_6,R.drawable.slide_7};
+        SliderMainAdapter sliderMainAdapter = new SliderMainAdapter(img, context);
+
+        headerViewHolder.viewPager.setAdapter(sliderMainAdapter);
+        headerViewHolder.circleIndicator.setViewPager(headerViewHolder.viewPager);
+
+        headerViewHolder.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage[0] = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    int pageCount = img.length;
+                    if (currentPage[0] == 0) {
+                        headerViewHolder.viewPager.setCurrentItem(pageCount - 1, false);
+                    } else if (currentPage[0] == pageCount - 1) {
+                        headerViewHolder.viewPager.setCurrentItem(0, false);
+                    }
+                }
+            }
+        });
+
+        final Handler handler = new Handler();
+        final Runnable update = new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage[0] == numberPage) {
+                    currentPage[0] = 0;
+                }
+                headerViewHolder.viewPager.setCurrentItem(currentPage[0]++, true);
+            }
+        };
+
+        Timer swipe = new Timer();
+        swipe.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, 6000, 2000);
     }
 
     @Override

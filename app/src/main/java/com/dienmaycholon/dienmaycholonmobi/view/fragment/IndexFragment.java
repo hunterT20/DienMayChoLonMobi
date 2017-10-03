@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.model.ItemIndex;
@@ -69,9 +70,9 @@ public class IndexFragment extends Fragment {
         list.add(itemIndex7);
         list.add(itemIndex8);
 
-        ItemTangAdapter itemTangAdapter = new ItemTangAdapter(list,getActivity());
-
-        lvIndex.setAdapter(itemTangAdapter);
+        ItemTangAdapter adapter = new ItemTangAdapter(list,getActivity());
+        adapter.setHasStableIds(true);
+        lvIndex.setAdapter(adapter);
     }
 
 }
