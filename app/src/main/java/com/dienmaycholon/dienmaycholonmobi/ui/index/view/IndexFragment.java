@@ -1,6 +1,7 @@
-package com.dienmaycholon.dienmaycholonmobi.view.fragment;
+package com.dienmaycholon.dienmaycholonmobi.ui.index.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,8 @@ import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.model.ItemIndex;
 import com.dienmaycholon.dienmaycholonmobi.model.Product;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
-import com.dienmaycholon.dienmaycholonmobi.view.adapter.ItemTangAdapter;
+import com.dienmaycholon.dienmaycholonmobi.ui.search.view.SearchActivity;
+import com.dienmaycholon.dienmaycholonmobi.ui.index.adapter.ItemTangAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ public class IndexFragment extends Fragment {
 
     private RecyclerView lvIndex;
     private List<ItemIndex> list;
+    private TextView txtvSearch;
 
     public IndexFragment() {
         // Required empty public constructor
@@ -36,12 +39,25 @@ public class IndexFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_index, container, false);
+
         addViews(view);
+        addControls();
         return view;
+    }
+
+    private void addControls() {
+        txtvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 
     private void addViews(View view) {
         lvIndex = view.findViewById(R.id.lvIndex);
+        txtvSearch = view.findViewById(R.id.txtvSearch);
         RecyclerViewUtil.setupRecyclerView(lvIndex, new ItemTangAdapter(list,getActivity()),getActivity());
 
         List<Product> productList = new ArrayList<>();

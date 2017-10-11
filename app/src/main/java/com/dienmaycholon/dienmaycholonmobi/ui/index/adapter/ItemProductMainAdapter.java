@@ -1,8 +1,8 @@
-package com.dienmaycholon.dienmaycholonmobi.view.adapter;
+package com.dienmaycholon.dienmaycholonmobi.ui.index.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +16,12 @@ import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 
 import java.util.List;
 
-public class ItemProductAdapter extends RecyclerView.Adapter<ItemProductAdapter.ItemSearchViewHolder> {
+public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMainAdapter.ItemSearchViewHolder> {
     private List<Product> listItems;
     private LayoutInflater mLayoutInflater;
     private Context context;
 
-    public ItemProductAdapter(List<Product> listItems, Context context) {
+    public ItemProductMainAdapter(List<Product> listItems, Context context) {
         this.listItems = listItems;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -41,6 +41,7 @@ public class ItemProductAdapter extends RecyclerView.Adapter<ItemProductAdapter.
         holder.txtvNameProduct.setText(pro.getName());
         holder.txtvPrice.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(pro.getPrice())) + "đ");
         holder.txtvPriceDel.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(pro.getPriceDel())) + "đ");
+        holder.txtvPriceDel.setPaintFlags(holder.txtvPriceDel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

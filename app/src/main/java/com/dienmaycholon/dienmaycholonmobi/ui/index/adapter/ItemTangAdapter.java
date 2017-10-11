@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.view.adapter;
+package com.dienmaycholon.dienmaycholonmobi.ui.index.adapter;
 
 import android.content.Context;
 import android.os.Handler;
@@ -59,11 +59,11 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ItemIndex itemIndex = listItems.get(position - 1);
             RecyclerViewUtil.setupRecyclerViewHorizontal(
                     itemTangViewHolder.rcvProductIndex,
-                    new ItemProductAdapter(itemIndex.getProductList(), context),context
+                    new ItemProductMainAdapter(itemIndex.getProductList(), context),context
             );
 
             itemTangViewHolder.txtvTitleTang.setText(itemIndex.getTitle());
-            ItemProductAdapter adapter = new ItemProductAdapter(itemIndex.getProductList(), context);
+            ItemProductMainAdapter adapter = new ItemProductMainAdapter(itemIndex.getProductList(), context);
             adapter.setHasStableIds(true);
             itemTangViewHolder.rcvProductIndex.setAdapter(adapter);
         }

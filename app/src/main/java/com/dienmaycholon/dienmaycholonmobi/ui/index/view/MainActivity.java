@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.view.activity;
+package com.dienmaycholon.dienmaycholonmobi.ui.index.view;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.view.fragment.IndexFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

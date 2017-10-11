@@ -15,13 +15,13 @@
         android:paddingStart="5dp">
 
         <ImageView
-            android:id="@+id/btnBack_Search"
+            android:id="@+id/imvBack_Search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:contentDescription="@string/todo"
             app:srcCompat="@drawable/ic_arrow_back_grey_900_24dp"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded,VectorDrawableCompat" />
 
         <EditText
             android:id="@+id/edtSearch"
@@ -40,11 +40,12 @@
             android:singleLine="true" />
 
         <ImageView
-            android:id="@+id/btnBarcode"
+            android:id="@+id/imvBarcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            app:srcCompat="@drawable/ic_barcode" android:contentDescription="@string/todo"
+            android:contentDescription="@string/todo"
+            app:srcCompat="@drawable/ic_barcode"
             tools:ignore="RtlHardcoded" />
 
     </android.support.design.widget.CoordinatorLayout>
