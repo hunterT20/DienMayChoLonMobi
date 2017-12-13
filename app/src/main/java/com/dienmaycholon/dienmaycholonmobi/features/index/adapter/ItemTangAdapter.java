@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.ui.index.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
 
 import android.content.Context;
 import android.os.Handler;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.model.ItemIndex;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ItemIndex;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
 import java.util.List;
@@ -21,7 +21,6 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ItemIndex> listItems;
-    private LayoutInflater mLayoutInflater;
     private Context context;
 
     private static final int TYPE_HEADER = 0;
@@ -31,7 +30,6 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public ItemTangAdapter(List<ItemIndex> listItems, Context context) {
         this.listItems = listItems;
         this.context = context;
-        this.mLayoutInflater = LayoutInflater.from(context);
     }
 
     @Override

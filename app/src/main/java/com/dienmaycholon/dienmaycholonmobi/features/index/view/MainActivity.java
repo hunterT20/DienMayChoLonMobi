@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.ui.index.view;
+package com.dienmaycholon.dienmaycholonmobi.features.index.view;
 
 import android.os.Bundle;
 import android.os.Handler;

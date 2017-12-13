@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.ui.search.view;
+package com.dienmaycholon.dienmaycholonmobi.features.search.view;
 
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.model.Product;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
-import com.dienmaycholon.dienmaycholonmobi.ui.index.adapter.ItemProductMainAdapter;
-import com.dienmaycholon.dienmaycholonmobi.ui.search.adapter.ItemProductSearchAdapter;
+import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.ItemProductMainAdapter;
+import com.dienmaycholon.dienmaycholonmobi.features.search.adapter.ItemProductSearchAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

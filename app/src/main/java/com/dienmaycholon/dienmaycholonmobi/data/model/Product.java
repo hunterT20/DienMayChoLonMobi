@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.model;
+package com.dienmaycholon.dienmaycholonmobi.data.model;
 
 public class Product {
     private String name;

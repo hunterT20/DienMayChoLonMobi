@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.ui.index.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;

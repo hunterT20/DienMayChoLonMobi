@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.dienmaycholon.dienmaycholonmobi.ui.index.view.IndexFragment"
+    tools:context="com.dienmaycholon.dienmaycholonmobi.features.index.view.IndexFragment"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

@@ -1,24 +1,35 @@
-package com.dienmaycholon.dienmaycholonmobi.ui.index.view;
+package com.dienmaycholon.dienmaycholonmobi.features.index.view;
 
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.model.ItemIndex;
-import com.dienmaycholon.dienmaycholonmobi.model.Product;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ItemIndex;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Token;
+import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
+import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
-import com.dienmaycholon.dienmaycholonmobi.ui.search.view.SearchActivity;
-import com.dienmaycholon.dienmaycholonmobi.ui.index.adapter.ItemTangAdapter;
+import com.dienmaycholon.dienmaycholonmobi.features.search.view.SearchActivity;
+import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.ItemTangAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +39,8 @@ public class IndexFragment extends Fragment {
     private RecyclerView lvIndex;
     private List<ItemIndex> list;
     private TextView txtvSearch;
+
+    private ApiService apiService;
 
     public IndexFragment() {
         // Required empty public constructor
@@ -89,6 +102,24 @@ public class IndexFragment extends Fragment {
         ItemTangAdapter adapter = new ItemTangAdapter(list,getActivity());
         adapter.setHasStableIds(true);
         lvIndex.setAdapter(adapter);
+
+        apiService = ApiUtils.getAPIservices();
+
+        apiService.repoToken().enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
+                if (response.isSuccessful()){
+                    if (response.body() != null)
+                    Log.e(TAG, "onResponse: " + response.body().getData());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
+            }
+        });
     }
+
 
 }

@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.ui.index.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.model.Product;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 
 import java.util.List;
