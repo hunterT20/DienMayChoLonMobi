@@ -3,7 +3,9 @@ package com.dienmaycholon.dienmaycholonmobi.data.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Token {
+import java.util.List;
+
+public class ApiListResult<T> {
     @SerializedName("message")
     @Expose
     private String message;
@@ -12,10 +14,7 @@ public class Token {
     private Integer errorcode;
     @SerializedName("data")
     @Expose
-    private String data;
-
-    public Token() {
-    }
+    private List<T> data;
 
     public String getMessage() {
         return message;
@@ -33,11 +32,11 @@ public class Token {
         this.errorcode = errorcode;
     }
 
-    public String getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

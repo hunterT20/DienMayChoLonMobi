@@ -1,11 +1,17 @@
 package com.dienmaycholon.dienmaycholonmobi.data.remote;
 
-import com.dienmaycholon.dienmaycholonmobi.data.model.Token;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface ApiService {
-    @GET("default/server/gettoken")
-    Call<Token> repoToken();
+    @GET("gettoken")
+    Observable<ApiResult<String>> getToken();
+
+    @GET("containerproduct")
+    Observable<ApiListResult<ContainerProduct>> getContainerProduct(@Query("token") String token);
 }

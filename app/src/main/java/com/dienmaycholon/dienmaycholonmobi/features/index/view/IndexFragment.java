@@ -3,7 +3,6 @@ package com.dienmaycholon.dienmaycholonmobi.features.index.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ItemIndex;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
-import com.dienmaycholon.dienmaycholonmobi.data.model.Token;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
@@ -25,9 +26,11 @@ import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.ItemTangAdapte
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
 
@@ -105,21 +108,56 @@ public class IndexFragment extends Fragment {
 
         apiService = ApiUtils.getAPIservices();
 
-        apiService.repoToken().enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(@NonNull Call<Token> call, @NonNull Response<Token> response) {
-                if (response.isSuccessful()){
-                    if (response.body() != null)
-                    Log.e(TAG, "onResponse: " + response.body().getData());
-                }
-            }
+        Observable<ApiResult<String>> getToken = apiService.getToken();
+        getToken.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ApiResult<String>>() {
+                     @Override
+                     public void onSubscribe(Disposable d) {
 
-            @Override
-            public void onFailure(@NonNull Call<Token> call, @NonNull Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+                     }
+
+                     @Override
+                     public void onNext(ApiResult<String> token) {
+                        getProduct(token.getData());
+                     }
+
+                     @Override
+                     public void onError(Throwable e) {
+                         Log.e(TAG, "onError: " + e.getMessage());
+                     }
+
+                     @Override
+                     public void onComplete() {
+
+                     }
+                });
     }
 
+    private void getProduct(String Token){
+        Observable<ApiListResult<ContainerProduct>> getProductMain = apiService.getContainerProduct(Token);
+        getProductMain.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ApiListResult<ContainerProduct>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onNext(ApiListResult<ContainerProduct> containerProductApiListResult) {
+                        Log.e(TAG, "onNext: " + containerProductApiListResult);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }
