@@ -4,13 +4,14 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ItemIndex;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
 import java.util.List;
@@ -19,15 +20,17 @@ import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
 
+import static android.content.ContentValues.TAG;
+
 public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<ItemIndex> listItems;
+    private List<ContainerProduct> listItems;
     private Context context;
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_FOOTER = 2;
 
-    public ItemTangAdapter(List<ItemIndex> listItems, Context context) {
+    public ItemTangAdapter(List<ContainerProduct> listItems, Context context) {
         this.listItems = listItems;
         this.context = context;
     }
@@ -54,14 +57,14 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             setSlider(headerViewHolder);
         }else if(holder instanceof ItemTangViewHolder) {
             ItemTangViewHolder itemTangViewHolder = (ItemTangViewHolder) holder;
-            ItemIndex itemIndex = listItems.get(position - 1);
+            ContainerProduct containerProduct = listItems.get(position - 1);
             RecyclerViewUtil.setupRecyclerViewHorizontal(
                     itemTangViewHolder.rcvProductIndex,
-                    new ItemProductMainAdapter(itemIndex.getProductList(), context),context
+                    new ItemProductMainAdapter(containerProduct.getChild(), context),context
             );
 
-            itemTangViewHolder.txtvTitleTang.setText(itemIndex.getTitle());
-            ItemProductMainAdapter adapter = new ItemProductMainAdapter(itemIndex.getProductList(), context);
+            itemTangViewHolder.txtvTitleTang.setText(containerProduct.getName());
+            ItemProductMainAdapter adapter = new ItemProductMainAdapter(containerProduct.getChild(), context);
             adapter.setHasStableIds(true);
             itemTangViewHolder.rcvProductIndex.setAdapter(adapter);
         }
@@ -73,6 +76,11 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return TYPE_HEADER;
         }
         return TYPE_ITEM;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     private boolean isPositionHeader (int position) {

@@ -11,17 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ItemProductSearchAdapter extends RecyclerView.Adapter<ItemProductSearchAdapter.ItemSearchViewHolder> {
-    private List<Product> listItems;
+    private List<Child> listItems;
     private LayoutInflater mLayoutInflater;
     private Context context;
 
-    public ItemProductSearchAdapter(List<Product> listItems, Context context) {
+    public ItemProductSearchAdapter(List<Child> listItems, Context context) {
         this.listItems = listItems;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -36,11 +37,14 @@ public class ItemProductSearchAdapter extends RecyclerView.Adapter<ItemProductSe
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ItemSearchViewHolder holder, int position) {
-        final Product pro = listItems.get(position);
+        final Child child = listItems.get(position);
 
-        holder.txtvNameProduct.setText(pro.getName());
-        holder.txtvPrice.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(pro.getPrice())) + "đ");
-        holder.txtvPriceDel.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(pro.getPriceDel())) + "đ");
+        Picasso.with(context).load(child.getMyid())
+                .error(R.mipmap.ic_launcher)
+                .into(holder.imgItemProduct);
+        holder.txtvNameProduct.setText(child.getName());
+        holder.txtvPrice.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(child.getSaleprice())) + "đ");
+        holder.txtvPriceDel.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(child.getDiscount())) + "đ");
         holder.txtvPriceDel.setPaintFlags(holder.txtvPriceDel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

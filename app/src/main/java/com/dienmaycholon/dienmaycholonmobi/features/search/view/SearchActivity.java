@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.ItemProductMainAdapter;
 import com.dienmaycholon.dienmaycholonmobi.features.search.adapter.ItemProductSearchAdapter;
@@ -76,25 +75,11 @@ public class SearchActivity extends AppCompatActivity {
         edtSearch = findViewById(R.id.edtSearch);
         rcvProductSearch = findViewById(R.id.rcvProductSearch);
 
-        List<Product> productList = new ArrayList<>();
-        Product product = new Product("Smart Tivi LED SAMSUNG 43 Inch UA43K5300AKXXV",36000000,3400000);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-        productList.add(product);
-
-        RecyclerViewUtil.setupRecyclerViewGrid(rcvProductSearch,new ItemProductMainAdapter(productList,this),this);
+        /*RecyclerViewUtil.setupRecyclerViewGrid(rcvProductSearch,new ItemProductMainAdapter(productList,this),this);
 
         ItemProductSearchAdapter adapter = new ItemProductSearchAdapter(productList,this);
         adapter.setHasStableIds(true);
-        rcvProductSearch.setAdapter(adapter);
+        rcvProductSearch.setAdapter(adapter);*/
     }
 
     @Override

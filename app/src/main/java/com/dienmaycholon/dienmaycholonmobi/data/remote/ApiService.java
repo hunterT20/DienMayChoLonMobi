@@ -12,6 +12,9 @@ public interface ApiService {
     @GET("gettoken")
     Observable<ApiResult<String>> getToken();
 
+    @GET("viewtoken")
+    Observable<ApiResult<String>> viewToken();
+
     @GET("containerproduct")
     Observable<ApiListResult<ContainerProduct>> getContainerProduct(@Query("token") String token);
 }

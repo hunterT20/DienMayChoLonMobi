@@ -1,5 +1,6 @@
 package com.dienmaycholon.dienmaycholonmobi.data.model;
 
+import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -60,9 +61,20 @@ public class Child {
     @SerializedName("gift")
     @Expose
     private String gift;
+    @SerializedName("image")
+    @Expose
+    private String Image;
     @SerializedName("element_special")
     @Expose
     private List<ElementSpecial> elementSpecial;
+
+    public String getImage() {
+        return ApiUtils.ROOT + Image;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
 
     public String getMyid() {
         return myid;
