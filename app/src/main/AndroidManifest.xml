@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dienmaycholon.dienmaycholonmobi">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".features.search.view.SearchActivity" />
+        <activity android:name=".features.product_detail.view.DetailActivity"></activity>
     </application>
 
 </manifest>

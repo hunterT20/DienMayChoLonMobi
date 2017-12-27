@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
-
-import static android.content.ContentValues.TAG;
 
 public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ContainerProduct> listItems;
@@ -167,7 +164,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         HeaderViewHolder(View itemView) {
             super (itemView);
-            this.viewPager = itemView.findViewById (R.id.viewPager);
+            this.viewPager = itemView.findViewById (R.id.vp_product);
             this.circleIndicator = itemView.findViewById(R.id.indicator);
         }
     }

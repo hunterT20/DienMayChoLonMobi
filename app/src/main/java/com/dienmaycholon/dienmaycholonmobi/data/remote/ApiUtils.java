@@ -5,7 +5,7 @@ public class ApiUtils {
     public ApiUtils() {
     }
 
-    public static final String ROOT = "https://48bf8ff4.ngrok.io";
+    public static final String ROOT = "https://edf37b7f.ngrok.io";
     private static final String BASE_URL = ROOT + "/default/server/";
 
     public static ApiService getAPIservices(){

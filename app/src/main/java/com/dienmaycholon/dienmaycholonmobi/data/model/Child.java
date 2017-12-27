@@ -61,7 +61,7 @@ public class Child {
     @SerializedName("gift")
     @Expose
     private String gift;
-    @SerializedName("image")
+    @SerializedName("photo")
     @Expose
     private String Image;
     @SerializedName("element_special")

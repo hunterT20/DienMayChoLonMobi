@@ -2,6 +2,7 @@ package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
+import com.dienmaycholon.dienmaycholonmobi.features.product_detail.view.DetailActivity;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +57,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                context.startActivity(new Intent(context, DetailActivity.class));
             }
         });
     }
