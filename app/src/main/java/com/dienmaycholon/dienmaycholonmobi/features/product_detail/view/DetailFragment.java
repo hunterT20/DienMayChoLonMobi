@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -17,7 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.RecyclerViewDetailAdapter;
 import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.SliderDetailPhotoAdapter;
+import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +38,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     @BindView(R.id.toolbar)    Toolbar toolbar;
     @BindView(R.id.main_appbar)    AppBarLayout main_appbar;
     @BindView(R.id.dotsLayout) LinearLayout dotsLayout;
+    @BindView(R.id.rcv_detail)    RecyclerView rcv_detail;
 
     private int[] img;
     private SliderDetailPhotoAdapter sliderDetailPhotoAdapter;
@@ -84,6 +92,14 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
 
             }
         });
+
+        List<String> list = new ArrayList<>();
+        list.add("0");
+        list.add("0");
+
+        RecyclerViewUtil.setupRecyclerView(rcv_detail,new RecyclerViewDetailAdapter(list, getActivity()),getActivity());
+        RecyclerViewDetailAdapter detailAdapter = new RecyclerViewDetailAdapter(list, getActivity());
+        rcv_detail.setAdapter(detailAdapter);
     }
 
     @Override
