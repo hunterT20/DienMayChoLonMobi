@@ -2,10 +2,12 @@ package com.dienmaycholon.dienmaycholonmobi.features.product_detail.view;
 
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
@@ -96,8 +98,16 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
         List<String> list = new ArrayList<>();
         list.add("0");
         list.add("0");
+        list.add("0");
+        list.add("0");
 
         RecyclerViewUtil.setupRecyclerView(rcv_detail,new RecyclerViewDetailAdapter(list, getActivity()),getActivity());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rcv_detail.getContext(),DividerItemDecoration.VERTICAL);
+        Drawable drawable = ContextCompat.getDrawable(getActivity(),R.drawable.custom_divider);
+        assert drawable != null;
+        dividerItemDecoration.setDrawable(drawable);
+        rcv_detail.addItemDecoration(dividerItemDecoration);
+
         RecyclerViewDetailAdapter detailAdapter = new RecyclerViewDetailAdapter(list, getActivity());
         rcv_detail.setAdapter(detailAdapter);
     }

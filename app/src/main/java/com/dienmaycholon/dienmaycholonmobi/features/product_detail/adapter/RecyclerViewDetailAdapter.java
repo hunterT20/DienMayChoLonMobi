@@ -16,7 +16,9 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
 
     private static final int TYPE_PRICE = 0;
     private static final int TYPE_MAKE = 1;
-    private static final int TYPE_FOOTER = 2;
+    private static final int TYPE_QUATANG = 2;
+    private static final int TYPE_KT = 3;
+    private static final int TYPE_FOOTER = 9;
 
     public RecyclerViewDetailAdapter(List<String> listItems, Context context) {
         this.listItems = listItems;
@@ -31,6 +33,12 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
         }else if (viewType == TYPE_MAKE){
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_make_layout, parent, false);
             return new MakeViewHolder(v);
+        }else if (viewType == TYPE_QUATANG){
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_qua_tang_layout, parent, false);
+            return new QuaTangViewHolder(v);
+        }else if (viewType == TYPE_KT){
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_thong_so_kt_layout, parent, false);
+            return new ThongSoViewHolder(v);
         }
         return null;
     }
@@ -51,8 +59,12 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
             return TYPE_PRICE;
         }else if (position == 1){
             return TYPE_MAKE;
+        }else if (position == 2){
+            return TYPE_QUATANG;
+        }else if (position == 3){
+            return TYPE_KT;
         }
-        return 2;
+        return 9;
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -64,6 +76,18 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
     private class MakeViewHolder extends RecyclerView.ViewHolder {
         MakeViewHolder(View view) {
             super(view);
+        }
+    }
+
+    private class QuaTangViewHolder extends RecyclerView.ViewHolder{
+        QuaTangViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    private class ThongSoViewHolder extends RecyclerView.ViewHolder {
+        ThongSoViewHolder(View v) {
+            super(v);
         }
     }
 }

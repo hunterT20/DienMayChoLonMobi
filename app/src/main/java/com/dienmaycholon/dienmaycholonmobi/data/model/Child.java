@@ -69,7 +69,7 @@ public class Child {
     private List<ElementSpecial> elementSpecial;
 
     public String getImage() {
-        return ApiUtils.ROOT + Image;
+        return Image;
     }
 
     public void setImage(String image) {

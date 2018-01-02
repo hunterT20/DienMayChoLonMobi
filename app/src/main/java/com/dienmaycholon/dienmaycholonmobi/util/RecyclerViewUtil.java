@@ -16,7 +16,7 @@ public class RecyclerViewUtil {
 
     public static void setupRecyclerView(RecyclerView recyclerView, RecyclerView.Adapter adapter, Context context){
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
     }
 

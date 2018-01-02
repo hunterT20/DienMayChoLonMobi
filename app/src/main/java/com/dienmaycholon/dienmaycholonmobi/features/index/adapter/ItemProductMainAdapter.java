@@ -45,7 +45,6 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
         final Child child = listItems.get(position);
 
         Picasso.with(context).load(child.getImage())
-                .resize(150,100)
                 .error(R.mipmap.ic_launcher)
                 .into(holder.imgItemProduct);
 
