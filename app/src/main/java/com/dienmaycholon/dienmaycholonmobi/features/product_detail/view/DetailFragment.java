@@ -13,6 +13,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.Constant;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
+import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
+import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.RecyclerViewDetailAdapter;
 import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.SliderDetailPhotoAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
@@ -30,6 +36,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +54,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     @BindView(R.id.main_appbar)    AppBarLayout main_appbar;
     @BindView(R.id.dotsLayout) LinearLayout dotsLayout;
     @BindView(R.id.rcv_detail)    RecyclerView rcv_detail;
+    @BindView(R.id.txtv_product_name) TextView txtv_product_name;
 
     private int[] img;
     private SliderDetailPhotoAdapter sliderDetailPhotoAdapter;
@@ -48,6 +62,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
     private boolean mIsTheTitleVisible = false;
     private TextView[] dots;
+    private ApiService apiService;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -62,6 +77,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
         ButterKnife.bind(this,view);
         setHasOptionsMenu(true);
 
+        apiService = ApiUtils.getAPIservices();
         addViews();
         return view;
     }
@@ -95,21 +111,46 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
             }
         });
 
-        List<String> list = new ArrayList<>();
-        list.add("0");
-        list.add("0");
-        list.add("0");
-        list.add("0");
+        getProductDetail(Constant.id_detail, Constant.Token);
+    }
 
-        RecyclerViewUtil.setupRecyclerView(rcv_detail,new RecyclerViewDetailAdapter(list, getActivity()),getActivity());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rcv_detail.getContext(),DividerItemDecoration.VERTICAL);
-        Drawable drawable = ContextCompat.getDrawable(getActivity(),R.drawable.custom_divider);
-        assert drawable != null;
-        dividerItemDecoration.setDrawable(drawable);
-        rcv_detail.addItemDecoration(dividerItemDecoration);
+    private void getProductDetail(String IDdetail, String Token){
+        Observable<ApiResult<ProductDetail>> getProductDetail = apiService.getProductDetail(IDdetail, Token);
+        getProductDetail.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ApiResult<ProductDetail>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-        RecyclerViewDetailAdapter detailAdapter = new RecyclerViewDetailAdapter(list, getActivity());
-        rcv_detail.setAdapter(detailAdapter);
+                    }
+
+                    @Override
+                    public void onNext(ApiResult<ProductDetail> productDetailApiResult) {
+                        ProductDetail productDetail = productDetailApiResult.getData();
+
+                        txtv_product_name.setText(productDetail.getProduct().getName());
+                        RecyclerViewUtil.setupRecyclerView(rcv_detail,new RecyclerViewDetailAdapter(productDetail, getActivity()),getActivity());
+                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rcv_detail.getContext(),DividerItemDecoration.VERTICAL);
+                        assert getActivity() != null;
+                        Drawable drawable = ContextCompat.getDrawable(getActivity(),R.drawable.custom_divider);
+                        assert drawable != null;
+                        dividerItemDecoration.setDrawable(drawable);
+                        rcv_detail.addItemDecoration(dividerItemDecoration);
+
+                        RecyclerViewDetailAdapter detailAdapter = new RecyclerViewDetailAdapter(productDetail, getActivity());
+                        rcv_detail.setAdapter(detailAdapter);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override
@@ -120,6 +161,10 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
         handleToolbarTitleVisibility(percentage);
     }
 
+    /**
+     * Xử lý ẩn/hiện toolbar: nếu percentage > percentage_show thì show, ngược lại thì ẩn
+     * @param percentage: phần trăm cuộn của appBarLayout (Tính được trong function onOffsetChanged)
+     */
     private void handleToolbarTitleVisibility(float percentage) {
         if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
 
@@ -146,6 +191,10 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
         v.startAnimation(alphaAnimation);
     }
 
+    /**
+     * add dot view vào trong viewpager
+     * @param currentPage: viewpager hiện tại
+     */
     private void addBottomDots(int currentPage) {
         dots = new TextView[img.length];
 

@@ -32,6 +32,12 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.context = context;
     }
 
+    public void reset(){
+        if (listItems.size() == 0) return;
+        listItems.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_HEADER) {
@@ -50,9 +56,12 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof HeaderViewHolder) {
+
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             setSlider(headerViewHolder);
+
         }else if(holder instanceof ItemTangViewHolder) {
+
             ItemTangViewHolder itemTangViewHolder = (ItemTangViewHolder) holder;
             ContainerProduct containerProduct = listItems.get(position - 1);
             RecyclerViewUtil.setupRecyclerViewHorizontal(
@@ -64,6 +73,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ItemProductMainAdapter adapter = new ItemProductMainAdapter(containerProduct.getChild(), context);
             adapter.setHasStableIds(true);
             itemTangViewHolder.rcvProductIndex.setAdapter(adapter);
+
         }
     }
 

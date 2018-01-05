@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.features.product_detail.view.DetailActivity;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMainAdapter.ItemSearchViewHolder> {
     private List<Child> listItems;
@@ -44,7 +42,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
     public void onBindViewHolder(ItemSearchViewHolder holder, int position) {
         final Child child = listItems.get(position);
 
-        Picasso.with(context).load(child.getImage())
+        Picasso.with(context).load(child.getPhoto())
                 .error(R.mipmap.ic_launcher)
                 .into(holder.imgItemProduct);
 
@@ -56,6 +54,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Constant.id_detail = child.getIdDetail();
                 context.startActivity(new Intent(context, DetailActivity.class));
             }
         });

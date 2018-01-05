@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/cardview_light_background">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtv_inventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -19,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/txtv_price_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -30,28 +31,28 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/txtv_inventory" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/txtv_note_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
         android:layout_marginStart="4dp"
         android:text="(Áp dụng toàn quốc)"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView6"
-        app:layout_constraintStart_toEndOf="@+id/textView6" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/txtv_price_current"
+        app:layout_constraintStart_toEndOf="@+id/txtv_price_current"
+        android:layout_marginLeft="4dp" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/txtv_cost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
         android:text="Giá cũ: 1.200.000đ"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/txtv_price_current"
+        android:layout_marginLeft="8dp" />
 
 </android.support.constraint.ConstraintLayout>

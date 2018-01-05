@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Child {
+public class ProductHistory {
     @SerializedName("myid")
     @Expose
     private String myid;
@@ -36,6 +36,15 @@ public class Child {
     @SerializedName("new_description")
     @Expose
     private String newDescription;
+    @SerializedName("is_red_day")
+    @Expose
+    private String isRedDay;
+    @SerializedName("is_double_price")
+    @Expose
+    private String isDoublePrice;
+    @SerializedName("is_million")
+    @Expose
+    private String isMillion;
     @SerializedName("coupons")
     @Expose
     private String coupons;
@@ -51,27 +60,15 @@ public class Child {
     @SerializedName("is_promotion")
     @Expose
     private String isPromotion;
-    @SerializedName("cid_res")
-    @Expose
-    private String cidRes;
     @SerializedName("namecate")
     @Expose
     private String namecate;
-    @SerializedName("id_detail")
+    @SerializedName("cid_res")
     @Expose
-    private String idDetail;
-    @SerializedName("detail_link_web")
+    private String cidRes;
+    @SerializedName("attribute")
     @Expose
-    private String detailLinkWeb;
-    @SerializedName("photo")
-    @Expose
-    private String photo;
-    @SerializedName("gift")
-    @Expose
-    private Integer gift;
-    @SerializedName("element_special")
-    @Expose
-    private List<ElementSpecial> elementSpecial;
+    private List<Attribute> attribute;
 
     public String getMyid() {
         return myid;
@@ -153,6 +150,30 @@ public class Child {
         this.newDescription = newDescription;
     }
 
+    public String getIsRedDay() {
+        return isRedDay;
+    }
+
+    public void setIsRedDay(String isRedDay) {
+        this.isRedDay = isRedDay;
+    }
+
+    public String getIsDoublePrice() {
+        return isDoublePrice;
+    }
+
+    public void setIsDoublePrice(String isDoublePrice) {
+        this.isDoublePrice = isDoublePrice;
+    }
+
+    public String getIsMillion() {
+        return isMillion;
+    }
+
+    public void setIsMillion(String isMillion) {
+        this.isMillion = isMillion;
+    }
+
     public String getCoupons() {
         return coupons;
     }
@@ -193,14 +214,6 @@ public class Child {
         this.isPromotion = isPromotion;
     }
 
-    public String getCidRes() {
-        return cidRes;
-    }
-
-    public void setCidRes(String cidRes) {
-        this.cidRes = cidRes;
-    }
-
     public String getNamecate() {
         return namecate;
     }
@@ -209,43 +222,19 @@ public class Child {
         this.namecate = namecate;
     }
 
-    public String getIdDetail() {
-        return idDetail;
+    public String getCidRes() {
+        return cidRes;
     }
 
-    public void setIdDetail(String idDetail) {
-        this.idDetail = idDetail;
+    public void setCidRes(String cidRes) {
+        this.cidRes = cidRes;
     }
 
-    public String getDetailLinkWeb() {
-        return detailLinkWeb;
+    public List<Attribute> getAttribute() {
+        return attribute;
     }
 
-    public void setDetailLinkWeb(String detailLinkWeb) {
-        this.detailLinkWeb = detailLinkWeb;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public Integer getGift() {
-        return gift;
-    }
-
-    public void setGift(Integer gift) {
-        this.gift = gift;
-    }
-
-    public List<ElementSpecial> getElementSpecial() {
-        return elementSpecial;
-    }
-
-    public void setElementSpecial(List<ElementSpecial> elementSpecial) {
-        this.elementSpecial = elementSpecial;
+    public void setAttribute(List<Attribute> attribute) {
+        this.attribute = attribute;
     }
 }

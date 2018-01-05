@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtv_Name_Product">
 
                 <TextView
-                    android:id="@+id/txtv_Title_Product"
+                    android:id="@+id/txtv_product_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -50,7 +50,7 @@
                     android:id="@+id/vp_product"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/txtv_Title_Product"
+                    android:layout_below="@id/txtv_product_name"
                     android:layout_centerInParent="true"
                     tools:layout_editor_absoluteX="8dp"
                     tools:layout_editor_absoluteY="0dp">
