@@ -1,6 +1,8 @@
 package com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
+import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 
 import java.util.List;
 
@@ -30,6 +33,12 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
     public RecyclerViewDetailAdapter(ProductDetail productDetail, Context context) {
         this.productDetail = productDetail;
         this.context = context;
+    }
+
+    public void reset(){
+        if (productDetail == null) return;
+        productDetail = null;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -53,15 +62,26 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
         return null;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        Product product = productDetail.getProduct();
         if (holder instanceof PriceViewHolder){
             PriceViewHolder priceViewHolder = (PriceViewHolder) holder;
-            Product product = productDetail.getProduct();
 
-            priceViewHolder.txtv_price_current.setText(product.getDiscount());
-            priceViewHolder.txtv_cost.setText(product.getSaleprice());
+            priceViewHolder.txtv_price_current.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(product.getDiscount())) + "đ");
+            priceViewHolder.txtv_cost.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(product.getSaleprice())) + "đ");
+            priceViewHolder.txtv_cost.setPaintFlags(priceViewHolder.txtv_cost.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             priceViewHolder.txtv_note_price.setText(product.getNoteunderprice());
+        }else if (holder instanceof MakeViewHolder){
+            MakeViewHolder makeViewHolder = (MakeViewHolder) holder;
+            makeViewHolder.txtv_thuong_hieu.setText(product.getBrand());
+        }else if (holder instanceof QuaTangViewHolder){
+
+        }else if (holder instanceof ThongSoViewHolder){
+
+        }else if (holder instanceof GioiThieuViewHolder){
+
         }
     }
 
@@ -98,8 +118,10 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     class MakeViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.txtv_thuong_hieu) TextView txtv_thuong_hieu;
         MakeViewHolder(View view) {
             super(view);
+            ButterKnife.bind(this,view);
         }
     }
 

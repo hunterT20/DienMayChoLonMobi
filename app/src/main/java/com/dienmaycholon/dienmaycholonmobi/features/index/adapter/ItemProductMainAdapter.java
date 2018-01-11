@@ -1,9 +1,13 @@
 package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +24,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
+
 public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMainAdapter.ItemSearchViewHolder> {
     private List<Child> listItems;
     private LayoutInflater mLayoutInflater;
@@ -33,13 +39,13 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
 
     @Override
     public ItemSearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mLayoutInflater.inflate(R.layout.item_product_main,parent,false);
+        View itemView = mLayoutInflater.inflate(R.layout.item_product_main, parent, false);
         return new ItemSearchViewHolder(itemView);
     }
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ItemSearchViewHolder holder, int position) {
+    public void onBindViewHolder(final ItemSearchViewHolder holder, int position) {
         final Child child = listItems.get(position);
 
         Picasso.with(context).load(child.getPhoto())
@@ -55,7 +61,11 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
             @Override
             public void onClick(View view) {
                 Constant.id_detail = child.getIdDetail();
-                context.startActivity(new Intent(context, DetailActivity.class));
+                Intent intent = new Intent(context, DetailActivity.class);
+                Pair<View, String> p1 = Pair.create((View) holder.imgItemProduct, ViewCompat.getTransitionName(holder.imgItemProduct));
+                Pair<View, String> p2 = Pair.create((View) holder.txtvNameProduct, ViewCompat.getTransitionName(holder.txtvNameProduct));
+                ActivityOptionsCompat options = makeSceneTransitionAnimation((Activity) context, p1, p2);
+                context.startActivity(intent, options.toBundle());
             }
         });
     }
@@ -72,7 +82,8 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
 
     class ItemSearchViewHolder extends RecyclerView.ViewHolder {
         private ImageView imgItemProduct;
-        private TextView txtvNameProduct,txtvPrice,txtvPriceDel;
+        private TextView txtvNameProduct, txtvPrice, txtvPriceDel;
+
         ItemSearchViewHolder(View itemView) {
             super(itemView);
             txtvNameProduct = itemView.findViewById(R.id.txtvNameProduct);

@@ -14,10 +14,9 @@ import com.dienmaycholon.dienmaycholonmobi.R;
 
 public class SliderMainAdapter extends PagerAdapter {
     private int[] image;
-    private LayoutInflater layoutInflater;
     private Context context;
 
-    public SliderMainAdapter(int[] image, Context context) {
+    SliderMainAdapter(int[] image, Context context) {
         this.image = image;
         this.context = context;
     }
@@ -36,7 +35,7 @@ public class SliderMainAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView;
-        layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
         View itemView = layoutInflater.inflate(R.layout.item_slider_main,container,false);
         imageView = itemView.findViewById(R.id.imgSlider);

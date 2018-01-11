@@ -28,10 +28,12 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/todo"
-                android:src="@drawable/product"
+                android:scaleType="centerCrop"
+                android:transitionName="image_product"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="UnusedAttribute" />
 
             <TextView
                 android:id="@+id/txtvNameProduct"
@@ -45,13 +47,14 @@
                 android:fontFamily="@font/roboto"
                 android:maxLines="2"
                 android:minLines="2"
-                android:text="Tivi 32 inch"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                android:transitionName="name_product"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgItemProduct" />
+                app:layout_constraintTop_toBottomOf="@+id/imgItemProduct"
+                tools:ignore="UnusedAttribute" />
         </LinearLayout>
 
         <TextView
@@ -61,7 +64,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:gravity="right"
-            android:text="32.000.000đ"
             android:textColor="@android:color/holo_red_light"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -79,7 +81,6 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:gravity="right"
-            android:text="40.000.000đ"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -10,20 +10,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Photo;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class SliderDetailPhotoAdapter extends PagerAdapter {
-    private int[] image;
-    private LayoutInflater layoutInflater;
+    private List<Photo> list;
     private Context context;
 
-    public SliderDetailPhotoAdapter(int[] image, Context context) {
-        this.image = image;
+    public SliderDetailPhotoAdapter(Context context) {
         this.context = context;
+    }
+
+    public void addList(List<Photo> list){
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void reset(){
+        if (list == null) return;
+        list.clear();
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return image.length;
+        return list.size();
     }
 
     @Override
@@ -35,11 +48,14 @@ public class SliderDetailPhotoAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         ImageView imageView;
-        layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
         View itemView = layoutInflater.inflate(R.layout.item_slider_detail,container,false);
         imageView = itemView.findViewById(R.id.imgSlider);
-        imageView.setImageResource(image[position]);
+
+        Picasso.with(context).load(list.get(position).getNormal())
+                .error(R.mipmap.ic_launcher)
+                .into(imageView);
 
         container.addView(itemView);
         return itemView;

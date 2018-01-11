@@ -20,11 +20,12 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
+import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.FilterIndexAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 import com.dienmaycholon.dienmaycholonmobi.features.search.view.SearchActivity;
 import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.ItemTangAdapter;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +44,6 @@ import static android.content.ContentValues.TAG;
 public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     @BindView(R.id.lvIndex) RecyclerView lvIndex;
     @BindView(R.id.swipeRefresh)    SwipeRefreshLayout swipeRefreshLayout;
-    private TextView txtvSearch;
 
     private ApiService apiService;
     private String TOKEN;
@@ -59,7 +59,7 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_index, container, false);
+        View view = inflater.inflate(R.layout.index_fragment, container, false);
         ButterKnife.bind(this,view);
 
         addViews(view);
@@ -68,25 +68,22 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
     private void addControls() {
-        txtvSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                if (getActivity() == null) return;
-                getActivity().startActivity(intent);
-            }
-        });
+
     }
 
     private void addViews(View view) {
-        txtvSearch = view.findViewById(R.id.txtvSearch);
         lvIndex.setHasFixedSize(true);
         lvIndex.setItemViewCacheSize(20);
         lvIndex.setDrawingCacheEnabled(true);
         lvIndex.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-        apiService = ApiUtils.getAPIservicesTest();
+        apiService = ApiUtils.getAPIservices();
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        adapter = new ItemTangAdapter(getActivity());
+        adapter.setHasStableIds(true);
+        RecyclerViewUtil.setupRecyclerView(lvIndex, adapter,getActivity());
+
         getToken();
     }
 
@@ -135,10 +132,7 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     @Override
                     public void onNext(ApiListResult<ContainerProduct> containerProductApiListResult) {
                         List<ContainerProduct> list = containerProductApiListResult.getData();
-                        RecyclerViewUtil.setupRecyclerView(lvIndex, new ItemTangAdapter(list,getActivity()),getActivity());
-
-                        adapter = new ItemTangAdapter(list,getActivity());
-                        adapter.setHasStableIds(true);
+                        adapter.addList(list);
                         lvIndex.setAdapter(adapter);
                     }
 

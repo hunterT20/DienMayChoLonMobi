@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -24,14 +25,15 @@ import android.widget.TextView;
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Photo;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
+import com.dienmaycholon.dienmaycholonmobi.features.error.ErrorFragment;
 import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.RecyclerViewDetailAdapter;
 import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.SliderDetailPhotoAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,14 +57,15 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     @BindView(R.id.dotsLayout) LinearLayout dotsLayout;
     @BindView(R.id.rcv_detail)    RecyclerView rcv_detail;
     @BindView(R.id.txtv_product_name) TextView txtv_product_name;
+    @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefresh;
 
-    private int[] img;
-    private SliderDetailPhotoAdapter sliderDetailPhotoAdapter;
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
     private boolean mIsTheTitleVisible = false;
-    private TextView[] dots;
     private ApiService apiService;
+    private List<Photo> photoList;
+    private ProductDetail productDetail;
+    private RecyclerViewDetailAdapter detailAdapter;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -88,33 +91,11 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
         main_appbar.addOnOffsetChangedListener(this);
         startAlphaAnimation(txtv_title_detail_toolbar, 0, View.INVISIBLE);
 
-        img = new int[]{R.drawable.product, R.drawable.product, R.drawable.product, R.drawable.product};
-        sliderDetailPhotoAdapter = new SliderDetailPhotoAdapter(img, getActivity());
-
-        addBottomDots(0);
-
-        viewPager.setAdapter(sliderDetailPhotoAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                addBottomDots(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
         getProductDetail(Constant.id_detail, Constant.Token);
     }
 
     private void getProductDetail(String IDdetail, String Token){
+        swipeRefresh.setRefreshing(true);
         Observable<ApiResult<ProductDetail>> getProductDetail = apiService.getProductDetail(IDdetail, Token);
         getProductDetail.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -126,9 +107,35 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
 
                     @Override
                     public void onNext(ApiResult<ProductDetail> productDetailApiResult) {
-                        ProductDetail productDetail = productDetailApiResult.getData();
+                        productDetail = productDetailApiResult.getData();
 
                         txtv_product_name.setText(productDetail.getProduct().getName());
+                        txtv_title_detail_toolbar.setText(productDetail.getProduct().getName());
+
+                        photoList = productDetail.getProduct().getPhoto();
+                        SliderDetailPhotoAdapter sliderDetailPhotoAdapter = new SliderDetailPhotoAdapter(getActivity());
+                        sliderDetailPhotoAdapter.addList(photoList);
+
+                        addBottomDots(0);
+
+                        viewPager.setAdapter(sliderDetailPhotoAdapter);
+                        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                            @Override
+                            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                            }
+
+                            @Override
+                            public void onPageSelected(int position) {
+                                addBottomDots(position);
+                            }
+
+                            @Override
+                            public void onPageScrollStateChanged(int state) {
+
+                            }
+                        });
+
                         RecyclerViewUtil.setupRecyclerView(rcv_detail,new RecyclerViewDetailAdapter(productDetail, getActivity()),getActivity());
                         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rcv_detail.getContext(),DividerItemDecoration.VERTICAL);
                         assert getActivity() != null;
@@ -137,18 +144,23 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
                         dividerItemDecoration.setDrawable(drawable);
                         rcv_detail.addItemDecoration(dividerItemDecoration);
 
-                        RecyclerViewDetailAdapter detailAdapter = new RecyclerViewDetailAdapter(productDetail, getActivity());
+                        detailAdapter = new RecyclerViewDetailAdapter(productDetail, getActivity());
                         rcv_detail.setAdapter(detailAdapter);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        swipeRefresh.setRefreshing(false);
+                        swipeRefresh.setEnabled(false);
                         Log.e(TAG, "onError: " + e.getMessage());
+                        assert getActivity() != null;
+                        ((DetailActivity)getActivity()).callFragment(new ErrorFragment());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        swipeRefresh.setRefreshing(false);
+                        swipeRefresh.setEnabled(false);
                     }
                 });
     }
@@ -196,7 +208,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
      * @param currentPage: viewpager hiện tại
      */
     private void addBottomDots(int currentPage) {
-        dots = new TextView[img.length];
+        TextView[] dots = new TextView[photoList.size()];
 
         dotsLayout.removeAllViews();
         for (int i = 0; i < dots.length; i++) {

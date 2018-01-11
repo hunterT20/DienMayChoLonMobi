@@ -13,10 +13,13 @@ import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import me.relex.circleindicator.CircleIndicator;
 
 public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -27,13 +30,16 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int TYPE_ITEM = 1;
     private static final int TYPE_FOOTER = 2;
 
-    public ItemTangAdapter(List<ContainerProduct> listItems, Context context) {
-        this.listItems = listItems;
+    public ItemTangAdapter(Context context) {
         this.context = context;
     }
 
+    public void addList(List<ContainerProduct> listItems){
+        this.listItems = listItems;
+    }
+
     public void reset(){
-        if (listItems.size() == 0) return;
+        if (listItems == null) return;
         listItems.clear();
         notifyDataSetChanged();
     }
@@ -59,6 +65,17 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             setSlider(headerViewHolder);
+            FilterIndexAdapter filterIndexAdapter = new FilterIndexAdapter(context);
+
+            List<String> list_filter = new ArrayList<>();
+            list_filter.add("Tin khuyến mãi");
+            list_filter.add("Mua trả góp");
+            list_filter.add("Thẻ thành viên");
+
+            RecyclerViewUtil.setupRecyclerViewHorizontal(headerViewHolder.rcv_filter_index,filterIndexAdapter,context);
+            filterIndexAdapter.addList(list_filter);
+
+            headerViewHolder.rcv_filter_index.setAdapter(filterIndexAdapter);
 
         }else if(holder instanceof ItemTangViewHolder) {
 
@@ -154,6 +171,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
+        if (listItems == null) return 0;
         return listItems.size() + 1;
     }
 
@@ -169,13 +187,13 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     class HeaderViewHolder extends RecyclerView.ViewHolder {
-        private ViewPager viewPager;
-        private CircleIndicator circleIndicator;
+        @BindView(R.id.vp_product) ViewPager viewPager;
+        @BindView(R.id.indicator) CircleIndicator circleIndicator;
+        @BindView(R.id.rcv_filter_index) RecyclerView rcv_filter_index;
 
         HeaderViewHolder(View itemView) {
             super (itemView);
-            this.viewPager = itemView.findViewById (R.id.vp_product);
-            this.circleIndicator = itemView.findViewById(R.id.indicator);
+            ButterKnife.bind(this,itemView);
         }
     }
 }
