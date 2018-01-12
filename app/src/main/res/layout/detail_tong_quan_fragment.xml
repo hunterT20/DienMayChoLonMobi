@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".features.product_detail.view.TongQuanFragment">
+    tools:context=".features.detail.view.TongQuanFragment">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,7 +23,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Di Động SAMSUNG Galaxy Note 8 SM-N950FD"
                 android:textSize="21sp"
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_bias="0.437"
@@ -37,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:padding="8dp"
-                android:text="Nhanh tay đặt cọc 500.000 đ để trở thành Khách Hàng đầu tiên sở hữu siêu phẩm SAMSUNG Galaxy Note 8\nLưu ý:\n- Ngày giao hàng dự kiến: 29/9 đến 5/10/2017\n- Giá bán dự kiến: 22.990.000 đ. Giá bán chính thức sẽ công bố sau ngày 15/9/2017"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -53,7 +51,6 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="22,990,000 đ"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -103,10 +100,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="Xem thêm"
+                android:text="@string/xem_them"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView17"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -114,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                android:text="Tính năng nổi bật"
+                android:text="@string/tinh_nang_noi_bat"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="21sp"
                 android:textStyle="bold"
@@ -126,7 +124,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="+ Hệ điều hành: Android 7.1 (Nougat)\n+ Chipset: Exynos 8895\n+ RAM: 6GB\n+ Bộ nhớ trong:64GB"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -165,10 +162,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
-                android:text="Xem thêm"
+                android:text="@string/xem_them"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView20"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginEnd="8dp" />
 
             <TextView
                 android:id="@+id/textView20"

@@ -26,6 +26,8 @@
                 android:id="@+id/imgItemProduct"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/todo"
                 android:scaleType="centerCrop"

@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.product_detail.view;
+package com.dienmaycholon.dienmaycholonmobi.features.detail.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;

@@ -2,6 +2,7 @@ package com.dienmaycholon.dienmaycholonmobi.data.remote;
 
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 
@@ -16,6 +17,9 @@ public interface ApiService {
 
     @GET("viewtoken")
     Observable<ApiResult<String>> viewToken();
+
+    @GET("boxslidehome")
+    Observable<ApiListResult<Banner>> getBannerHome(@Query("token") String token);
 
     @GET("containerproduct")
     Observable<ApiListResult<ContainerProduct>> getContainerProduct(@Query("token") String token);

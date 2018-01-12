@@ -1,9 +1,8 @@
-package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.detail.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,19 +10,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Photo;
+import com.squareup.picasso.Picasso;
 
-public class SliderMainAdapter extends PagerAdapter {
-    private int[] image;
+import java.util.List;
+
+public class SliderDetailPhotoAdapter extends PagerAdapter {
+    private List<Photo> list;
     private Context context;
 
-    SliderMainAdapter(int[] image, Context context) {
-        this.image = image;
+    public SliderDetailPhotoAdapter(Context context) {
         this.context = context;
+    }
+
+    public void addList(List<Photo> list){
+        this.list = list;
+        notifyDataSetChanged();
+    }
+
+    public void reset(){
+        if (list == null) return;
+        list.clear();
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return image.length;
+        return list.size();
     }
 
     @Override
@@ -37,9 +50,12 @@ public class SliderMainAdapter extends PagerAdapter {
         ImageView imageView;
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
-        View itemView = layoutInflater.inflate(R.layout.item_slider_main,container,false);
+        View itemView = layoutInflater.inflate(R.layout.item_slider_detail,container,false);
         imageView = itemView.findViewById(R.id.imgSlider);
-        imageView.setImageResource(image[position]);
+
+        Picasso.with(context).load(list.get(position).getNormal())
+                .error(R.mipmap.ic_launcher)
+                .into(imageView);
 
         container.addView(itemView);
         return itemView;

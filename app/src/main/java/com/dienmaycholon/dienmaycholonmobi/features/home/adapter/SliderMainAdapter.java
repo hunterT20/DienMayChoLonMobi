@@ -1,42 +1,35 @@
-package com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.home.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.data.model.Photo;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class SliderDetailPhotoAdapter extends PagerAdapter {
-    private List<Photo> list;
+import static android.content.ContentValues.TAG;
+
+public class SliderMainAdapter extends PagerAdapter {
+    private List<Banner> banners;
     private Context context;
 
-    public SliderDetailPhotoAdapter(Context context) {
+    SliderMainAdapter(List<Banner> image, Context context) {
+        this.banners = image;
         this.context = context;
-    }
-
-    public void addList(List<Photo> list){
-        this.list = list;
-        notifyDataSetChanged();
-    }
-
-    public void reset(){
-        if (list == null) return;
-        list.clear();
-        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return banners.size();
     }
 
     @Override
@@ -47,15 +40,17 @@ public class SliderDetailPhotoAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        ImageView imageView;
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert layoutInflater != null;
-        View itemView = layoutInflater.inflate(R.layout.item_slider_detail,container,false);
-        imageView = itemView.findViewById(R.id.imgSlider);
+        View itemView = layoutInflater.inflate(R.layout.item_slider_main,container,false);
 
-        Picasso.with(context).load(list.get(position).getNormal())
+        ImageView imageView = itemView.findViewById(R.id.imgSlider);
+        Picasso.with(context).load(banners.get(position).getPhoto())
+                .fit()
                 .error(R.mipmap.ic_launcher)
                 .into(imageView);
+
+        Log.e(TAG, "instantiateItem: " + banners.get(position).getPhoto());
 
         container.addView(itemView);
         return itemView;
@@ -63,6 +58,6 @@ public class SliderDetailPhotoAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((LinearLayout)object);
+        container.removeView((CardView)object);
     }
 }

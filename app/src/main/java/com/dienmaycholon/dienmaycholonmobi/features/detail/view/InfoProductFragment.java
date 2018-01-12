@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.product_detail.view;
+package com.dienmaycholon.dienmaycholonmobi.features.detail.view;
 
 
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TongQuanFragment extends Fragment {
+public class InfoProductFragment extends Fragment {
 
 
-    public TongQuanFragment() {
+    public InfoProductFragment() {
     }
 
 
@@ -26,7 +26,7 @@ public class TongQuanFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.detail_tong_quan_fragment, container, false);
+        View view = inflater.inflate(R.layout.detail_info_product_fragment, container, false);
         ButterKnife.bind(this,view);
         return view;
     }

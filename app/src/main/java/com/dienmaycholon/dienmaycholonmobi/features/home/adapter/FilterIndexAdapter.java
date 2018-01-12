@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.home.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +19,7 @@ public class FilterIndexAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public FilterIndexAdapter(Context context) {
+    FilterIndexAdapter(Context context) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
     }

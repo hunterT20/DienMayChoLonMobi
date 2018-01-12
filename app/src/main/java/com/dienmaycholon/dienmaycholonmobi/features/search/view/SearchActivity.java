@@ -11,12 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
-import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.ItemProductMainAdapter;
-import com.dienmaycholon.dienmaycholonmobi.features.search.adapter.ItemProductSearchAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
     private ImageView imvBack_Search;
@@ -27,7 +21,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.search_activity);
 
         addViews();
         addEvents();

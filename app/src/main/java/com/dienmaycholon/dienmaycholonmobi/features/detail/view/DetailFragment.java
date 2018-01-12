@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.product_detail.view;
+package com.dienmaycholon.dienmaycholonmobi.features.detail.view;
 
 
 import android.graphics.Color;
@@ -30,8 +30,8 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.features.error.ErrorFragment;
-import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.RecyclerViewDetailAdapter;
-import com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter.SliderDetailPhotoAdapter;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.adapter.RecyclerViewDetailAdapter;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.adapter.SliderDetailPhotoAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
 import java.util.List;

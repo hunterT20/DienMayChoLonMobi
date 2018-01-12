@@ -1,7 +1,6 @@
-package com.dienmaycholon.dienmaycholonmobi.features.index.view;
+package com.dienmaycholon.dienmaycholonmobi.features.home.view;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,21 +10,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
-import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.FilterIndexAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
-import com.dienmaycholon.dienmaycholonmobi.features.search.view.SearchActivity;
-import com.dienmaycholon.dienmaycholonmobi.features.index.adapter.ItemTangAdapter;
+import com.dienmaycholon.dienmaycholonmobi.features.home.adapter.ItemTangAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,7 +37,7 @@ import static android.content.ContentValues.TAG;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     @BindView(R.id.lvIndex) RecyclerView lvIndex;
     @BindView(R.id.swipeRefresh)    SwipeRefreshLayout swipeRefreshLayout;
 
@@ -50,7 +46,7 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private Boolean isGetToken = false;
     private ItemTangAdapter adapter;
 
-    public IndexFragment() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
@@ -59,10 +55,10 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.index_fragment, container, false);
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
         ButterKnife.bind(this,view);
 
-        addViews(view);
+        addViews();
         addControls();
         return view;
     }
@@ -71,7 +67,7 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     }
 
-    private void addViews(View view) {
+    private void addViews() {
         lvIndex.setHasFixedSize(true);
         lvIndex.setItemViewCacheSize(20);
         lvIndex.setDrawingCacheEnabled(true);
@@ -102,7 +98,7 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     public void onNext(ApiResult<String> token) {
                         Constant.Token = token.getData();
                         TOKEN = token.getData();
-                        getProduct(token.getData());
+                        getBannerHome(token.getData());
                     }
 
                     @Override
@@ -115,6 +111,35 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     @Override
                     public void onComplete() {
                         isGetToken = true;
+                    }
+                });
+    }
+
+    private void getBannerHome(final String Token){
+        Observable<ApiListResult<Banner>> getBannerHome = apiService.getBannerHome(Token);
+        getBannerHome.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ApiListResult<Banner>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ApiListResult<Banner> bannerApiListResult) {
+                        List<Banner> bannerList = bannerApiListResult.getData();
+                        adapter.addListBanner(bannerList);
+                        getProduct(Token);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }
@@ -132,7 +157,7 @@ public class IndexFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     @Override
                     public void onNext(ApiListResult<ContainerProduct> containerProductApiListResult) {
                         List<ContainerProduct> list = containerProductApiListResult.getData();
-                        adapter.addList(list);
+                        adapter.addListProduct(list);
                         lvIndex.setAdapter(adapter);
                     }
 

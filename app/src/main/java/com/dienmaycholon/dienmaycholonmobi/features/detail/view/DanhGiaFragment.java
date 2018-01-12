@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.product_detail.view;
+package com.dienmaycholon.dienmaycholonmobi.features.detail.view;
 
 
 import android.os.Bundle;

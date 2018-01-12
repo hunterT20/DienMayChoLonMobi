@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.product_detail.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.detail.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,8 +13,6 @@ import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

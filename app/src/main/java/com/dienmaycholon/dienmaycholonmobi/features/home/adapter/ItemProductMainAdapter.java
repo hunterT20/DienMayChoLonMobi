@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
-import com.dienmaycholon.dienmaycholonmobi.features.product_detail.view.DetailActivity;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.view.DetailActivity;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +39,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
 
     @Override
     public ItemSearchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mLayoutInflater.inflate(R.layout.item_product_main, parent, false);
+        View itemView = mLayoutInflater.inflate(R.layout.home_product_layout, parent, false);
         return new ItemSearchViewHolder(itemView);
     }
 

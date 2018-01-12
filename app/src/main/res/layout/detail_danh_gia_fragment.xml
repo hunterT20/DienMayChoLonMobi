@@ -9,7 +9,7 @@
     android:layout_marginRight="8dp"
     android:nestedScrollingEnabled="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".features.product_detail.view.DanhGiaFragment"
+    tools:context=".features.detail.view.DanhGiaFragment"
     tools:layout_editor_absoluteX="8dp"
     tools:layout_editor_absoluteY="8dp"
     tools:targetApi="lollipop" />

@@ -1,8 +1,10 @@
-package com.dienmaycholon.dienmaycholonmobi.features.index.view;
+package com.dienmaycholon.dienmaycholonmobi.features.home.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        callFragment(new IndexFragment());
+        callFragment(new HomeFragment());
     }
 
     @Override
@@ -83,9 +85,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private int level_Menu = 0;
+    @SuppressLint("SetTextI18n")
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 

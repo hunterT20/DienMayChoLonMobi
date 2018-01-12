@@ -1,22 +1,25 @@
-package com.dienmaycholon.dienmaycholonmobi.features.index.adapter;
+package com.dienmaycholon.dienmaycholonmobi.features.home.adapter;
 
 import android.content.Context;
-import android.os.Handler;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +27,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ContainerProduct> listItems;
+    private List<Banner> bannerList;
     private Context context;
 
     private static final int TYPE_HEADER = 0;
@@ -34,8 +38,14 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.context = context;
     }
 
-    public void addList(List<ContainerProduct> listItems){
+    public void addListProduct(List<ContainerProduct> listItems){
         this.listItems = listItems;
+        notifyDataSetChanged();
+    }
+
+    public void addListBanner(List<Banner> list){
+        this.bannerList = list;
+        notifyDataSetChanged();
     }
 
     public void reset(){
@@ -47,10 +57,10 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == TYPE_HEADER) {
-            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.header_layout, parent, false);
+            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.home_header_layout, parent, false);
             return new HeaderViewHolder (v);
         } else if(viewType == TYPE_ITEM) {
-            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.item_listmain, parent, false);
+            View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.home_tang_layout, parent, false);
             return new ItemTangViewHolder (v);
         } else if(viewType == TYPE_FOOTER) {
             /*View v = LayoutInflater.from (parent.getContext ()).inflate (R.layout.list_item, parent, false);
@@ -64,7 +74,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if(holder instanceof HeaderViewHolder) {
 
             final HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-            setSlider(headerViewHolder);
+            setSliderHeader(headerViewHolder);
             FilterIndexAdapter filterIndexAdapter = new FilterIndexAdapter(context);
 
             List<String> list_filter = new ArrayList<>();
@@ -80,6 +90,14 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }else if(holder instanceof ItemTangViewHolder) {
 
             ItemTangViewHolder itemTangViewHolder = (ItemTangViewHolder) holder;
+
+            List<Banner> banners = listItems.get(position - 1).getBanner();
+            if (banners.size() != 0){
+                setSliderTang(itemTangViewHolder, banners);
+            }else {
+                itemTangViewHolder.slider.setVisibility(View.GONE);
+            }
+
             ContainerProduct containerProduct = listItems.get(position - 1);
             RecyclerViewUtil.setupRecyclerViewHorizontal(
                     itemTangViewHolder.rcvProductIndex,
@@ -115,17 +133,28 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return position == listItems.size () + 1;
     }
 
-    private void setSlider(final HeaderViewHolder headerViewHolder){
-        final int[] currentPage = {0};
-        final int numberPage = 0;
-
-        final int[] img =  new int[]{R.drawable.slide_1,R.drawable.slide_2,R.drawable.slide_3,R.drawable.slide_4,R.drawable.slide_5,R.drawable.slide_6,R.drawable.slide_7};
-        SliderMainAdapter sliderMainAdapter = new SliderMainAdapter(img, context);
+    private void setSliderHeader(final HeaderViewHolder headerViewHolder){
+        SliderMainAdapter sliderMainAdapter = new SliderMainAdapter(bannerList, context);
 
         headerViewHolder.viewPager.setAdapter(sliderMainAdapter);
         headerViewHolder.circleIndicator.setViewPager(headerViewHolder.viewPager);
+        headerViewHolder.viewPager.setPageMargin((int) (context.getResources().getDisplayMetrics().widthPixels * -0.26));
+        headerViewHolder.viewPager.setOffscreenPageLimit(5);
+        headerViewHolder.viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override public void transformPage(@NonNull View page, float position) {
+                page.setScaleX(0.85f - Math.abs(position * 0.4f));
+                page.setScaleY(0.95f - Math.abs(position * 0.6f));
+                page.setAlpha(1.0f - Math.abs(position * 0.5f));
+            }
+        });
+    }
 
-        headerViewHolder.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    private void setSliderTang(final ItemTangViewHolder holder, final List<Banner> banners){
+        SliderMainAdapter sliderMainAdapter = new SliderMainAdapter(banners,context);
+        addBottomDots(0, holder, banners);
+
+        holder.viewPager.setAdapter(sliderMainAdapter);
+        holder.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -133,40 +162,14 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             @Override
             public void onPageSelected(int position) {
-                currentPage[0] = position;
+                addBottomDots(position, holder, banners);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    int pageCount = img.length;
-                    if (currentPage[0] == 0) {
-                        headerViewHolder.viewPager.setCurrentItem(pageCount - 1, false);
-                    } else if (currentPage[0] == pageCount - 1) {
-                        headerViewHolder.viewPager.setCurrentItem(0, false);
-                    }
-                }
+
             }
         });
-
-        final Handler handler = new Handler();
-        final Runnable update = new Runnable() {
-            @Override
-            public void run() {
-                if (currentPage[0] == numberPage) {
-                    currentPage[0] = 0;
-                }
-                headerViewHolder.viewPager.setCurrentItem(currentPage[0]++, true);
-            }
-        };
-
-        Timer swipe = new Timer();
-        swipe.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(update);
-            }
-        }, 6000, 2000);
     }
 
     @Override
@@ -175,14 +178,32 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return listItems.size() + 1;
     }
 
+    private void addBottomDots(int currentPage, ItemTangViewHolder holder, List<Banner> banners) {
+        TextView[] dots = new TextView[banners.size()];
+
+        holder.dotsLayout.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(context);
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(Color.parseColor("#666666"));
+            holder.dotsLayout.addView(dots[i]);
+        }
+
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(context.getResources().getColor(R.color.cardview_light_background));
+    }
+
     class ItemTangViewHolder extends RecyclerView.ViewHolder {
-        TextView txtvTitleTang;
-        RecyclerView rcvProductIndex;
+        @BindView(R.id.txtvTitleTang) TextView txtvTitleTang;
+        @BindView(R.id.rcvProductIndex) RecyclerView rcvProductIndex;
+        @BindView(R.id.dotsLayout)        LinearLayout dotsLayout;
+        @BindView(R.id.vp_product) ViewPager viewPager;
+        @BindView(R.id.slider)        RelativeLayout slider;
 
         ItemTangViewHolder(View itemView) {
             super(itemView);
-            txtvTitleTang = itemView.findViewById(R.id.txtvTitleTang);
-            rcvProductIndex = itemView.findViewById(R.id.rcvProductIndex);
+            ButterKnife.bind(this,itemView);
         }
     }
 

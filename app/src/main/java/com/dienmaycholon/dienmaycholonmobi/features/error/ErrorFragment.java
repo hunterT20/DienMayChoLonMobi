@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.features.product_detail.view.DetailActivity;
-import com.dienmaycholon.dienmaycholonmobi.features.product_detail.view.DetailFragment;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.view.DetailActivity;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.view.DetailFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
