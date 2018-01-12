@@ -50,8 +50,6 @@ public class SliderMainAdapter extends PagerAdapter {
                 .error(R.mipmap.ic_launcher)
                 .into(imageView);
 
-        Log.e(TAG, "instantiateItem: " + banners.get(position).getPhoto());
-
         container.addView(itemView);
         return itemView;
     }
