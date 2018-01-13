@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#bcbbbb</color>
     <color name="colorAccent">#ff8800</color>
     <color name="BackgroundNavSub">#1E393A</color>
+
+    <color name="colorToolbar">#F7EF43</color>
 </resources>
