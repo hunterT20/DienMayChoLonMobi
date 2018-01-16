@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -58,6 +60,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     @BindView(R.id.rcv_detail)    RecyclerView rcv_detail;
     @BindView(R.id.txtv_product_name) TextView txtv_product_name;
     @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefresh;
+    @BindView(R.id.btnBackSub)    ImageView btnBackSub;
 
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.9f;
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
@@ -164,6 +167,14 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
                     }
                 });
     }
+
+    @OnClick(R.id.btnBackSub)
+    public void onBackStackClick(){
+        assert getActivity() != null;
+        getActivity().onBackPressed();
+        getActivity().supportFinishAfterTransition();
+    }
+
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

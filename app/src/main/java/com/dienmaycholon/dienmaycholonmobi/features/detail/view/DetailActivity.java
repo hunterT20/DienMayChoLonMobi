@@ -17,6 +17,12 @@ public class DetailActivity extends AppCompatActivity {
         callFragment(new DetailFragment());
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        supportFinishAfterTransition();
+    }
+
     public void callFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.frm_Detail, fragment)

@@ -31,7 +31,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
     private LayoutInflater mLayoutInflater;
     private Context context;
 
-    ItemProductMainAdapter(List<Child> listItems, Context context) {
+    public ItemProductMainAdapter(List<Child> listItems, Context context) {
         this.listItems = listItems;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.context = context;
@@ -62,8 +62,8 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
             public void onClick(View view) {
                 Constant.id_detail = child.getIdDetail();
                 Intent intent = new Intent(context, DetailActivity.class);
-                Pair<View, String> p1 = Pair.create((View) holder.imgItemProduct, ViewCompat.getTransitionName(holder.imgItemProduct));
-                Pair<View, String> p2 = Pair.create((View) holder.txtvNameProduct, ViewCompat.getTransitionName(holder.txtvNameProduct));
+                Pair<View, String> p1 = Pair.create((View) holder.imgItemProduct, "image_product");
+                Pair<View, String> p2 = Pair.create((View) holder.txtvNameProduct, "name_product");
                 ActivityOptionsCompat options = makeSceneTransitionAnimation((Activity) context, p1, p2);
                 context.startActivity(intent, options.toBundle());
             }

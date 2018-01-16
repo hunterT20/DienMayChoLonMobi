@@ -6,7 +6,9 @@
     android:id="@+id/swipeRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.detail.view.DetailFragment">
+    android:transitionGroup="true"
+    tools:context=".features.detail.view.DetailFragment"
+    tools:ignore="UnusedAttribute">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -45,6 +47,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:textColor="#666666"
@@ -119,6 +125,7 @@
                 android:id="@+id/rcv_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#f4f4f4"
                 android:nestedScrollingEnabled="false"
                 tools:targetApi="lollipop" />
         </android.support.v4.widget.NestedScrollView>
