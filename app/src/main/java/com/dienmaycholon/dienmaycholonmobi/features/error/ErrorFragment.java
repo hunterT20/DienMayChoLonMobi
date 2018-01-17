@@ -21,8 +21,7 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class ErrorFragment extends Fragment {
-    @BindView(R.id.txtv_refresh)
-    TextView txtv_refresh;
+    @BindView(R.id.txtv_refresh)    TextView txtv_refresh;
 
     public ErrorFragment() {
     }
@@ -34,6 +33,12 @@ public class ErrorFragment extends Fragment {
         View view = inflater.inflate(R.layout.error_fragment, container, false);
         ButterKnife.bind(this,view);
         return view;
+    }
+
+    @OnClick(R.id.img_back)
+    public void onBackClick(){
+        assert getActivity() != null;
+        getActivity().onBackPressed();
     }
 
     @OnClick(R.id.txtv_refresh)

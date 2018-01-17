@@ -2,16 +2,20 @@ package com.dienmaycholon.dienmaycholonmobi.features.detail.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -128,6 +132,13 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
             RecyclerViewUtil.setupRecyclerView(tinhNangViewHolder.rcv_tinhnang, adapter, context);
 
             tinhNangViewHolder.rcv_tinhnang.setAdapter(adapter);
+
+            tinhNangViewHolder.btn_xemthem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }else if (holder instanceof SanPhamTuongTuViewHolder){
             SanPhamTuongTuViewHolder viewHolder = (SanPhamTuongTuViewHolder) holder;
             List<Child> childs = productDetail.getSimilarProduct();
@@ -268,6 +279,7 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
 
     class TinhNangViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.rcv_tinhnang) RecyclerView rcv_tinhnang;
+        @BindView(R.id.btn_xemthem)        Button btn_xemthem;
         TinhNangViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);

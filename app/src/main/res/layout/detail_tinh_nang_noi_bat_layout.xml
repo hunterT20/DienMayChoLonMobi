@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Tính năng nổi bật"
+        android:text="Thông số kỹ thuật"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
@@ -18,7 +18,15 @@
         android:id="@+id/rcv_tinhnang"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:background="@color/cardview_light_background" />
+
+    <Button
+        android:id="@+id/btn_xemthem"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xem thêm"
+        android:textAllCaps="false"
+        android:textSize="16sp" />
 
 </LinearLayout>
