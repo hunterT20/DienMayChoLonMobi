@@ -2,13 +2,11 @@ package com.dienmaycholon.dienmaycholonmobi.features.detail.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -24,11 +22,11 @@ import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.data.model.DetailElement;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ElementHot;
-import com.dienmaycholon.dienmaycholonmobi.data.model.Photo;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Product;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.model.PromotionText;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Slideshow;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.view.DetailActivity;
 import com.dienmaycholon.dienmaycholonmobi.features.home.adapter.ItemProductMainAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
@@ -41,6 +39,7 @@ import butterknife.ButterKnife;
 public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private ProductDetail productDetail;
     private Context context;
+    private FragmentManager fragmentManager;
 
     private static final int TYPE_PRICE = 0;
     private static final int TYPE_MAKE = 1;
@@ -54,6 +53,10 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
     public RecyclerViewDetailAdapter(ProductDetail productDetail, Context context) {
         this.productDetail = productDetail;
         this.context = context;
+    }
+
+    public void setFragmentManager(FragmentManager fragmentManager){
+        this.fragmentManager = fragmentManager;
     }
 
     public void reset(){
@@ -136,7 +139,9 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
             tinhNangViewHolder.btn_xemthem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    ModalBottomSheet modalBottomSheet = new ModalBottomSheet();
+                    modalBottomSheet.addList(productDetail.getElementProduct());
+                    modalBottomSheet.show(fragmentManager, modalBottomSheet.getTag());
                 }
             });
         }else if (holder instanceof SanPhamTuongTuViewHolder){
@@ -153,14 +158,6 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
             ItemProductMainAdapter adapter = new ItemProductMainAdapter(childs, context);
             adapter.setHasStableIds(true);
             viewHolder.rcvProductIndex.setAdapter(adapter);
-        }else if (holder instanceof ThongSoViewHolder){
-            ThongSoViewHolder thongSoViewHolder = (ThongSoViewHolder) holder;
-            thongSoViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
         }else if (holder instanceof GioiThieuViewHolder){
             final GioiThieuViewHolder gioiThieuViewHolder = (GioiThieuViewHolder) holder;
             final List<Slideshow> slideshows = product.getSlideshow();

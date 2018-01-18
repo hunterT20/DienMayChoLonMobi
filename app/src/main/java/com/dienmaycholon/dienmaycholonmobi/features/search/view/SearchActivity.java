@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.features.home.adapter.ItemProductMainAdapter;
+import com.dienmaycholon.dienmaycholonmobi.features.search.adapter.ItemProductSearchAdapter;
+import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
 public class SearchActivity extends AppCompatActivity {
     private ImageView imvBack_Search;

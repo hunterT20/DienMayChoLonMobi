@@ -148,6 +148,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
                         rcv_detail.addItemDecoration(dividerItemDecoration);
 
                         detailAdapter = new RecyclerViewDetailAdapter(productDetail, getActivity());
+                        detailAdapter.setFragmentManager(getActivity().getSupportFragmentManager());
                         rcv_detail.setAdapter(detailAdapter);
                     }
 
