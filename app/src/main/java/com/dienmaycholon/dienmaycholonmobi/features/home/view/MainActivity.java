@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,10 +17,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.features.category.CategoryActivity;
+import com.dienmaycholon.dienmaycholonmobi.features.category.CategoryFragment;
 import com.dienmaycholon.dienmaycholonmobi.features.search.view.SearchActivity;
 
 import butterknife.BindView;
@@ -40,6 +45,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
+
+        addViews();
+        callFragment(new HomeFragment());
+    }
+
+    private void addViews() {
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -48,8 +59,6 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-
-        callFragment(new HomeFragment());
     }
 
     @Override
@@ -84,34 +93,20 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private int level_Menu = 0;
     @SuppressLint("SetTextI18n")
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         final View header = navigationView.getHeaderView(0);
-        final View header_main = header.findViewById(R.id.nav_header_main);
-        final View header_sub = header.findViewById(R.id.nav_header_sub);
-        final TextView txtvTitleSub = header.findViewById(R.id.txtvTitleSubMenu);
-        ImageView btnBackSub = header.findViewById(R.id.btnBackSub);
 
         switch (id){
-            //Sự kiện click menu level 0
             case R.id.nav_home:
                 return true;
             case R.id.nav_category:
-                navigationView.getMenu().clear();
-                navigationView.inflateMenu(R.menu.category_menu);
-                txtvTitleSub.setText("Danh mục");
-                animationMenu();
-                header_main.setVisibility(View.GONE);
-                header_sub.setVisibility(View.VISIBLE);
-                header.setBackgroundColor(getResources().getColor(R.color.BackgroundNavSub));
-                level_Menu = 1;
-                break;
+                startActivity(new Intent(MainActivity.this, CategoryActivity.class));
+                return true;
             case R.id.nav_chinhanh:
                 break;
             case R.id.nav_notification:
@@ -124,84 +119,11 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_setting:
                 break;
-
-            //Sự kiện click menu level 1 click
-            case R.id.nav_category_dientu:
-                level_Menu = 2;
-                navigationView.getMenu().clear();
-                navigationView.inflateMenu(R.menu.dientu_category_menu);
-                txtvTitleSub.setText(item.getTitle());
-                animationMenu();
-                break;
-            case R.id.nav_category_dienlanh:
-                level_Menu = 2;
-                navigationView.getMenu().clear();
-                navigationView.inflateMenu(R.menu.dienlanh_category_menu);
-                txtvTitleSub.setText(item.getTitle());
-                animationMenu();
-                break;
-            case R.id.nav_category_giadung:
-                break;
-            case R.id.nav_category_vienthong:
-                break;
-            case R.id.nav_category_mobi:
-                break;
-            case R.id.nav_category_noithat:
-                break;
-            case R.id.nav_category_dichvu:
-                break;
         }
-
-        //Sự kiện click button back trong menu
-        btnBackSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*B1: Nếu level menu == 1 (menu đang ở Danh mục) thì xóa layout menu lv1 và thay bằng menu lv0
-                * B2: Thực hiện animation đóng mở menu, Ẩn Header menu Danh mục, hiện Header menu main
-                * B3: Cuối cùng chuyển biến level_menu về 0*/
-                if (level_Menu == 1){
-                    navigationView.getMenu().clear();
-                    navigationView.inflateMenu(R.menu.activity_main_drawer);
-                    animationMenu();
-                    header_main.setVisibility(View.VISIBLE);
-                    header_sub.setVisibility(View.GONE);
-                    header.setBackground(getResources().getDrawable(R.drawable.background_nav));
-                    level_Menu = 0;
-                }else if (level_Menu == 2){
-                    /*B1: Nếu level menu == 2 (menu đang ở con của Danh mục) thì xóa layout menu lv2 và thay bằng menu Danh mục
-                    * B2: Thực hiện animation đóng mở menu
-                    * B3: Thay giá trị biến level = 1*/
-                    navigationView.getMenu().clear();
-                    navigationView.inflateMenu(R.menu.category_menu);
-                    txtvTitleSub.setText("Danh mục");
-                    animationMenu();
-                    level_Menu = 1;
-                }
-        }
-        });
-
         return true;
     }
 
     /**
-     * Khi chuyển level menu sẽ hiển thị đóng => chờ 500ms và mở lại
-     * để làm mượt quá trình chuyển layout menu
-     */
-    public void animationMenu(){
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                drawer.openDrawer(GravityCompat.START);
-            }
-        }, 500);
-    }
-
-    /**
-     *
      * @param fragment: fragment cần hiển thị để thay thế layout frmContent
      *                (áp dụng cho Fragment V4)
      */

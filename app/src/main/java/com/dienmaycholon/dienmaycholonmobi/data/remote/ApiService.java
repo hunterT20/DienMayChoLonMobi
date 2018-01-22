@@ -4,6 +4,7 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Category;
+import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryChild;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 
