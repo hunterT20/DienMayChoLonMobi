@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.dienmaycholon.dienmaycholonmobi.R;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -17,6 +18,11 @@ public class CategoryActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         callFragment(new CategoryFragment());
+    }
+
+    @OnClick(R.id.btn_back)
+    public void onBackClick(){
+        onBackPressed();
     }
 
     public void callFragment(Fragment fragment) {

@@ -23,7 +23,7 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <ImageView
-                android:id="@+id/btnBackSub"
+                android:id="@+id/btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -33,12 +33,13 @@
                 app:srcCompat="@drawable/ic_back" />
 
             <TextView
+                android:id="@+id/txtv_title_danh_muc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:text="Danh mục"
+                android:text="@string/danh_muc"
                 android:textColor="@android:color/black" />
         </android.support.v7.widget.Toolbar>
 
@@ -47,7 +48,8 @@
     <FrameLayout
         android:id="@+id/frm_category"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>

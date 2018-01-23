@@ -7,6 +7,6 @@
     tools:context=".features.category.CategoryActivity"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar_danh_muc"/>
 
 </LinearLayout>

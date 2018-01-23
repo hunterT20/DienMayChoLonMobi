@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,12 @@ import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Category;
+import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryChild;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,12 +32,13 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CategoryFragment extends Fragment {
+public class CategoryFragment extends Fragment implements CategoryParentAdapter.CategoryListener {
     @BindView(R.id.rcv_category_parent)    RecyclerView rcv_category_parent;
     @BindView(R.id.rcv_category_children) RecyclerView rcv_category_children;
 
     private ApiService apiService;
-    private CategoryAdapter adapter;
+    private CategoryParentAdapter adapter;
+    private CategoryChildAdapter childAdapter;
 
     public CategoryFragment() {
     }
@@ -46,6 +51,13 @@ public class CategoryFragment extends Fragment {
         ButterKnife.bind(this,view);
 
         apiService = ApiUtils.getAPIservices();
+
+        adapter = new CategoryParentAdapter(getActivity());
+        adapter.setOnEventListener(this);
+        RecyclerViewUtil.setupRecyclerView(rcv_category_parent, adapter, getActivity());
+
+        childAdapter = new CategoryChildAdapter(getActivity());
+        RecyclerViewUtil.setupRecyclerView(rcv_category_children, childAdapter, getActivity());
         addViews();
         return view;
     }
@@ -62,10 +74,11 @@ public class CategoryFragment extends Fragment {
 
                     @Override
                     public void onNext(ApiListResult<Category> categoryApiListResult) {
-                        adapter = new CategoryAdapter(getActivity());
-                        RecyclerViewUtil.setupRecyclerView(rcv_category_parent, adapter, getActivity());
                         adapter.addList(categoryApiListResult.getData());
                         rcv_category_parent.setAdapter(adapter);
+
+                        childAdapter.addList(categoryApiListResult.getData().get(0).getCategoryChildList());
+                        rcv_category_children.setAdapter(childAdapter);
                     }
 
                     @Override
@@ -80,4 +93,9 @@ public class CategoryFragment extends Fragment {
                 });
     }
 
+    @Override
+    public void onParentItemClick(List<CategoryChild> categoryChildList) {
+        childAdapter.clear();
+        childAdapter.addList(categoryChildList);
+    }
 }

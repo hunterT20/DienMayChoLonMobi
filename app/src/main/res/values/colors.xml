@@ -7,4 +7,5 @@
 
     <color name="colorToolbar">#F7EF43</color>
     <color name="colorTinhNang">#dadada</color>
+    <color name="colorCategoryParent">#EFF0F5</color>
 </resources>

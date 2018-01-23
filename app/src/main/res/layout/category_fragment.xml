@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2.4"
-        android:background="#d9d9d9" />
+        android:background="@color/colorCategoryParent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rcv_category_children"
