@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.category;
+package com.dienmaycholon.dienmaycholonmobi.features.category.all;
 
 import android.content.Context;
 import android.graphics.Color;

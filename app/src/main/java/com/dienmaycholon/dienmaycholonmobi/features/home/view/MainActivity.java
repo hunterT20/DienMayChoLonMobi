@@ -1,13 +1,9 @@
 package com.dienmaycholon.dienmaycholonmobi.features.home.view;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,22 +11,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.features.category.CategoryActivity;
+import com.dienmaycholon.dienmaycholonmobi.features.menu.MenuMainFragment;
 import com.dienmaycholon.dienmaycholonmobi.features.search.view.SearchActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.nav_view) NavigationView navigationView;
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.drawer_layout) DrawerLayout drawer;
@@ -54,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView.setNavigationItemSelectedListener(this);
+        callMenu(new MenuMainFragment());
     }
 
     @Override
@@ -89,34 +81,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.nav_home:
-                return true;
-            case R.id.nav_category:
-                startActivity(new Intent(MainActivity.this, CategoryActivity.class));
-                return true;
-            case R.id.nav_chinhanh:
-                break;
-            case R.id.nav_notification:
-                break;
-            case R.id.nav_history:
-                break;
-            case R.id.nav_contact:
-                break;
-            case R.id.nav_info:
-                break;
-            case R.id.nav_setting:
-                break;
-        }
-        return true;
-    }
-
     /**
      * @param fragment: fragment cần hiển thị để thay thế layout frmContent
      *                (áp dụng cho Fragment V4)
@@ -125,6 +89,18 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.frmContent, fragment)
+                .commit();
+    }
+
+    /**
+     *
+     * @param fragment: menu cần hiển thị (làm dưới dạng fragment để dễ thay layout và animation)
+     *                (áp dụng cho Fragment V4)
+     */
+    public void callMenu(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frm_menu, fragment)
                 .commit();
     }
 }

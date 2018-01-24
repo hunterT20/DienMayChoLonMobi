@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.features.category;
+package com.dienmaycholon.dienmaycholonmobi.features.category.all;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
