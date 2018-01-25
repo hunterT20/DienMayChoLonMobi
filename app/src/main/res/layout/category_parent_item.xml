@@ -6,7 +6,8 @@
     android:layout_marginRight="2dp"
     android:orientation="vertical"
     android:paddingBottom="10dp"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:layout_marginEnd="2dp">
 
     <ImageView
         android:id="@+id/imv_category_parent"
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_television" />
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/txtv_category_title_parent"
@@ -22,6 +23,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="4dp"
-        android:text="Điện tử"
         android:textSize="12sp" />
 </LinearLayout>

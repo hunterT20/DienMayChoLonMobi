@@ -27,6 +27,7 @@
         <activity android:name=".features.search.view.SearchActivity" />
         <activity android:name=".features.detail.view.DetailActivity" />
         <activity android:name=".features.category.all.CategoryActivity" />
+        <activity android:name=".features.category.detail.CategoryDetailActivity" />
     </application>
 
 </manifest>

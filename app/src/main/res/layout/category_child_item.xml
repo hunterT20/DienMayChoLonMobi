@@ -11,12 +11,12 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ic_dientu_karaoke" />
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/txtv_title_category_child"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:text="TextView" />
+        android:layout_marginStart="8dp" />
 </LinearLayout>

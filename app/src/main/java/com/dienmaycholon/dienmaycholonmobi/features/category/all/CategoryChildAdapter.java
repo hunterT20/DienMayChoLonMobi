@@ -1,6 +1,7 @@
 package com.dienmaycholon.dienmaycholonmobi.features.category.all;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryChild;
+import com.dienmaycholon.dienmaycholonmobi.features.category.detail.CategoryDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<RecyclerView.View
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                context.startActivity(new Intent(context, CategoryDetailActivity.class));
             }
         });
     }
