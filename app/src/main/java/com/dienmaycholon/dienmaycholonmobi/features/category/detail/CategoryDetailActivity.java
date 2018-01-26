@@ -43,7 +43,9 @@ public class CategoryDetailActivity extends AppCompatActivity implements Navigat
         spinnerArray.add("Giá từ cao đến thấp");
 
         spinner.setTag("some_id");
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, spinnerArray);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerArray);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinner.setAdapter(spinnerArrayAdapter);
     }
 
