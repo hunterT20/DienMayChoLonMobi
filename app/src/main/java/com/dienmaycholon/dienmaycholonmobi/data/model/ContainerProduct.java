@@ -9,6 +9,9 @@ public class ContainerProduct {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("alias")
+    @Expose
+    private String alias;
     @SerializedName("child")
     @Expose
     private List<Child> child;
@@ -18,6 +21,14 @@ public class ContainerProduct {
     @SerializedName("banner")
     @Expose
     private List<Banner> banner;
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
     public String getName() {
         return name;

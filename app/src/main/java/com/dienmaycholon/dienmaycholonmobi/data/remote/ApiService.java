@@ -5,6 +5,7 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Category;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryChild;
+import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 
@@ -28,6 +29,12 @@ public interface ApiService {
 
     @GET("containerproduct")
     Observable<ApiListResult<ContainerProduct>> getContainerProduct(@Query("token") String token);
+
+    @GET("getfeaturecate/cate/{alias}")
+    Observable<ApiResult<CategoryDetail>> getCategoryDetail(
+            @Path(value = "alias", encoded = true) String alias,
+            @Query("token") String token
+    );
 
     @GET("productdetail{id_detail}")
     Observable<ApiResult<ProductDetail>> getProductDetail(

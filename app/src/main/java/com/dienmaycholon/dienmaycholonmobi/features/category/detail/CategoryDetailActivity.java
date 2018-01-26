@@ -2,6 +2,7 @@ package com.dienmaycholon.dienmaycholonmobi.features.category.detail;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -32,6 +33,10 @@ public class CategoryDetailActivity extends AppCompatActivity implements Navigat
         setContentView(R.layout.category_detail_activity);
         ButterKnife.bind(this);
 
+        addViews();
+    }
+
+    private void addViews() {
         navigationView.setNavigationItemSelectedListener(this);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -47,6 +52,8 @@ public class CategoryDetailActivity extends AppCompatActivity implements Navigat
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(spinnerArrayAdapter);
+
+        callFragment(new CategoryDetailFragment());
     }
 
     @Override
@@ -62,5 +69,12 @@ public class CategoryDetailActivity extends AppCompatActivity implements Navigat
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
+    }
+
+    public void callFragment(Fragment fragment){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frm_category_detail, fragment)
+                .commit();
     }
 }

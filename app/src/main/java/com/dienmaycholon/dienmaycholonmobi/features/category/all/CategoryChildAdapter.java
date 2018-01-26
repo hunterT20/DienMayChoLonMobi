@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryChild;
 import com.dienmaycholon.dienmaycholonmobi.features.category.detail.CategoryDetailActivity;
 import com.squareup.picasso.Picasso;
@@ -49,7 +50,7 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CategoryChildViewHolder viewHolder = (CategoryChildViewHolder) holder;
-        CategoryChild categoryChild = categoryChildList.get(position);
+        final CategoryChild categoryChild = categoryChildList.get(position);
 
         viewHolder.txtv_title_category_child.setText(categoryChild.getName());
         Picasso.with(context).load(categoryChild.getIcon())
@@ -60,6 +61,7 @@ public class CategoryChildAdapter extends RecyclerView.Adapter<RecyclerView.View
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Constant.alias = categoryChild.getAlias();
                 context.startActivity(new Intent(context, CategoryDetailActivity.class));
             }
         });

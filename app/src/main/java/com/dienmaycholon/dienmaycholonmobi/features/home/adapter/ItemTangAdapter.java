@@ -1,6 +1,7 @@
 package com.dienmaycholon.dienmaycholonmobi.features.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -14,8 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
+import com.dienmaycholon.dienmaycholonmobi.features.category.all.CategoryActivity;
+import com.dienmaycholon.dienmaycholonmobi.features.category.detail.CategoryDetailActivity;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
 import java.util.ArrayList;
@@ -98,7 +102,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 itemTangViewHolder.slider.setVisibility(View.GONE);
             }
 
-            ContainerProduct containerProduct = listItems.get(position - 1);
+            final ContainerProduct containerProduct = listItems.get(position - 1);
             RecyclerViewUtil.setupRecyclerViewHorizontal(
                     itemTangViewHolder.rcvProductIndex,
                     new ItemProductMainAdapter(containerProduct.getChild(), context),context
@@ -109,6 +113,13 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             adapter.setHasStableIds(true);
             itemTangViewHolder.rcvProductIndex.setAdapter(adapter);
 
+            itemTangViewHolder.txtv_xem_them.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Constant.alias = containerProduct.getAlias();
+                    context.startActivity(new Intent(context, CategoryDetailActivity.class));
+                }
+            });
         }
     }
 
@@ -196,6 +207,7 @@ public class ItemTangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     class ItemTangViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.txtvTitleTang) TextView txtvTitleTang;
+        @BindView(R.id.txtv_xem_them) TextView txtv_xem_them;
         @BindView(R.id.rcvProductIndex) RecyclerView rcvProductIndex;
         @BindView(R.id.dotsLayout)        LinearLayout dotsLayout;
         @BindView(R.id.vp_product) ViewPager viewPager;
