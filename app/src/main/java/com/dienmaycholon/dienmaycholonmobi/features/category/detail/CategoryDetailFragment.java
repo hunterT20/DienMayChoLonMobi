@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryDetailProduct;
@@ -28,6 +28,8 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +58,7 @@ public class CategoryDetailFragment extends Fragment {
     }
 
     private void addViews() {
-        Observable<ApiResult<CategoryDetail>> getCategoryDetail = apiService.getCategoryDetail(Constant.alias,Constant.Token);
+        Observable<ApiResult<CategoryDetail>> getCategoryDetail = apiService.getCategoryParent(Constant.alias,Constant.Token);
         getCategoryDetail.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ApiResult<CategoryDetail>>() {
@@ -67,6 +69,7 @@ public class CategoryDetailFragment extends Fragment {
 
                     @Override
                     public void onNext(ApiResult<CategoryDetail> categoryDetailApiResult) {
+                        Log.e(TAG, "onNext: " + categoryDetailApiResult.getData().getName());
                         CategoryDetail categoryDetail = categoryDetailApiResult.getData();
                         List<CategoryDetailProduct> productList = categoryDetail.getCategoryDetailProducts();
 
@@ -76,7 +79,7 @@ public class CategoryDetailFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "onError: " + e.getMessage());
                     }
 
                     @Override

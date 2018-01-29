@@ -28,7 +28,7 @@ public class CategoryActivity extends AppCompatActivity {
     public void callFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frm_category, fragment)
+                .replace(R.id.frm_content, fragment)
                 .commit();
     }
 }

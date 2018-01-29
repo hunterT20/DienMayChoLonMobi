@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.features.cart.CartActivity;
 import com.dienmaycholon.dienmaycholonmobi.features.category.all.CategoryActivity;
 import com.dienmaycholon.dienmaycholonmobi.features.search.view.SearchActivity;
 
@@ -79,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch (id){
+            case R.id.btn_cart:
+                startActivity(new Intent(MainActivity.this, CartActivity.class));
+        }
 
         return super.onOptionsItemSelected(item);
     }

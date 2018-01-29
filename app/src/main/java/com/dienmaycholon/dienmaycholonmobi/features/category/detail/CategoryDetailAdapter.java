@@ -34,7 +34,6 @@ public class CategoryDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void addList(List<CategoryDetailProduct> categoryDetailProductList){
         this.categoryDetailProducts.addAll(categoryDetailProductList);
         notifyDataSetChanged();
-
     }
 
     @Override

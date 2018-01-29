@@ -30,8 +30,8 @@ public interface ApiService {
     @GET("containerproduct")
     Observable<ApiListResult<ContainerProduct>> getContainerProduct(@Query("token") String token);
 
-    @GET("getfeaturecate/cate/{alias}")
-    Observable<ApiResult<CategoryDetail>> getCategoryDetail(
+    @GET("getsubcategory/cate/{alias}")
+    Observable<ApiResult<CategoryDetail>> getCategoryParent(
             @Path(value = "alias", encoded = true) String alias,
             @Query("token") String token
     );

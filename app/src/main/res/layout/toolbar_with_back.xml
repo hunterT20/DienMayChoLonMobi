@@ -33,7 +33,7 @@
                 app:srcCompat="@drawable/ic_back" />
 
             <TextView
-                android:id="@+id/txtv_title_danh_muc"
+                android:id="@+id/txtv_title_toolbar_with_back"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -46,7 +46,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
-        android:id="@+id/frm_category"
+        android:id="@+id/frm_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"

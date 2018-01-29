@@ -186,7 +186,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     }
 
     /**
-     * Xử lý ẩn/hiện toolbar_danh_muc: nếu percentage > percentage_show thì show, ngược lại thì ẩn
+     * Xử lý ẩn/hiện toolbar_with_back: nếu percentage > percentage_show thì show, ngược lại thì ẩn
      * @param percentage: phần trăm cuộn của appBarLayout (Tính được trong function onOffsetChanged)
      */
     private void handleToolbarTitleVisibility(float percentage) {
