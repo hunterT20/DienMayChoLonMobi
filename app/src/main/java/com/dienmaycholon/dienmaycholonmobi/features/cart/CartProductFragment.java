@@ -1,9 +1,12 @@
 package com.dienmaycholon.dienmaycholonmobi.features.cart;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,9 +46,23 @@ public class CartProductFragment extends Fragment {
         assert getActivity() != null;
         ((CartActivity) getActivity()).setTitleToolbar("Giỏ hàng");
 
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rcv_cart_product.getContext(),DividerItemDecoration.VERTICAL);
+        assert getActivity() != null;
+        Drawable drawable = ContextCompat.getDrawable(getActivity(),R.drawable.custom_divider);
+        assert drawable != null;
+        dividerItemDecoration.setDrawable(drawable);
+        rcv_cart_product.addItemDecoration(dividerItemDecoration);
+
         adapter = new CartProductAdapter(getActivity());
         RecyclerViewUtil.setupRecyclerView(rcv_cart_product, adapter, getActivity());
         rcv_cart_product.setAdapter(adapter);
+
+        ((CartActivity) getActivity()).getBackButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     @OnClick(R.id.btn_thanh_toan)

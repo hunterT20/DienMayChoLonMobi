@@ -4,13 +4,18 @@ package com.dienmaycholon.dienmaycholonmobi.features.cart;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 
 import butterknife.ButterKnife;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +39,13 @@ public class CartInfoFragment extends Fragment {
     private void addViews() {
         assert getActivity() != null;
         ((CartActivity)getActivity()).setTitleToolbar("Thông tin giao hàng");
+
+        ((CartActivity)getActivity()).getBackButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((CartActivity) getActivity()).callFragment(new CartProductFragment());
+            }
+        });
     }
 
 }

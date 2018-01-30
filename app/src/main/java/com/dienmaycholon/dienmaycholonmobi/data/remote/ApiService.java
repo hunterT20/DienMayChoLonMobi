@@ -6,11 +6,14 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Category;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryChild;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryDetail;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -40,5 +43,11 @@ public interface ApiService {
     Observable<ApiResult<ProductDetail>> getProductDetail(
             @Path(value = "id_detail", encoded = true) String category,
             @Query("token") String token
+    );
+
+    @POST("cart")
+    Observable<ApiResult<String>> postCart(
+            @Query("token") String token,
+            @Body Child child
     );
 }

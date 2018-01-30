@@ -15,9 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.49">
-
-    </android.support.v7.widget.RecyclerView>
+        tools:listitem="@layout/cart_product_item" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"

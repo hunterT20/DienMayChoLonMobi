@@ -1,13 +1,18 @@
 package com.dienmaycholon.dienmaycholonmobi.data.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity
 public class Child {
     @SerializedName("myid")
     @Expose
+    @PrimaryKey
     private String myid;
     @SerializedName("name")
     @Expose

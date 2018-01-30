@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
@@ -12,6 +13,7 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CartProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -37,6 +39,8 @@ public class CartProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CartProductViewHolder viewHolder = (CartProductViewHolder) holder;
+
+        viewHolder.imv_minus.setEnabled(false);
     }
 
     @Override
@@ -45,6 +49,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class CartProductViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.imv_minus)        ImageView imv_minus;
         CartProductViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);

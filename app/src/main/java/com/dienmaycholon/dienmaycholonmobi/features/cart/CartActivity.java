@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
@@ -13,6 +14,7 @@ import butterknife.ButterKnife;
 
 public class CartActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)    Toolbar toolbar;
+    @BindView(R.id.btn_back)    ImageView btn_back;
     @BindView(R.id.txtv_title_toolbar_with_back)    TextView txtv_title_toolbar_with_back;
 
     @Override
@@ -26,7 +28,6 @@ public class CartActivity extends AppCompatActivity {
 
     private void addViews() {
         setSupportActionBar(toolbar);
-
         callFragment(new CartProductFragment());
     }
 
@@ -39,5 +40,9 @@ public class CartActivity extends AppCompatActivity {
 
     public void setTitleToolbar(String titleToolbar){
         txtv_title_toolbar_with_back.setText(titleToolbar);
+    }
+
+    public ImageView getBackButton(){
+        return btn_back;
     }
 }
