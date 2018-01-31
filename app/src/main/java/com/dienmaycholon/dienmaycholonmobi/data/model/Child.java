@@ -1,7 +1,9 @@
 package com.dienmaycholon.dienmaycholonmobi.data.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,8 +13,9 @@ import java.util.List;
 @Entity
 public class Child {
     @SerializedName("myid")
-    @Expose
     @PrimaryKey
+    @NonNull
+    @Expose
     private String myid;
     @SerializedName("name")
     @Expose
@@ -30,6 +33,7 @@ public class Child {
     @Expose
     private String isModel;
     @SerializedName("is_price")
+    @Ignore
     @Expose
     private String isPrice;
     @SerializedName("is_flash_sale")
@@ -75,14 +79,25 @@ public class Child {
     @Expose
     private Integer gift;
     @SerializedName("element_special")
+    @Ignore
     @Expose
     private List<ElementSpecial> elementSpecial;
+    private int count;
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @NonNull
     public String getMyid() {
         return myid;
     }
 
-    public void setMyid(String myid) {
+    public void setMyid(@NonNull String myid) {
         this.myid = myid;
     }
 

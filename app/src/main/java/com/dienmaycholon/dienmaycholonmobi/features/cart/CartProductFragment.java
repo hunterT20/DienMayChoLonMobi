@@ -11,14 +11,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.Toast;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.localDB.database.LocalDatabase;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +35,8 @@ public class CartProductFragment extends Fragment {
     @BindView(R.id.rcv_cart_product)    RecyclerView rcv_cart_product;
 
     private CartProductAdapter adapter;
+    private static final String TAG = CartProductFragment.class.getSimpleName();
+    private CompositeDisposable mCompositeDisposable;
 
     public CartProductFragment() {
     }
@@ -37,6 +47,7 @@ public class CartProductFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.cart_product_fragment, container, false);
         ButterKnife.bind(this,view);
+        mCompositeDisposable = new CompositeDisposable();
 
         addViews();
         return view;
@@ -57,12 +68,32 @@ public class CartProductFragment extends Fragment {
         RecyclerViewUtil.setupRecyclerView(rcv_cart_product, adapter, getActivity());
         rcv_cart_product.setAdapter(adapter);
 
-        ((CartActivity) getActivity()).getBackButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().onBackPressed();
-            }
-        });
+        Disposable disposable = LocalDatabase
+                .getInstance(getActivity())
+                .getChildDao()
+                .getListProductCurrentBuy()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::onGetAllProductSuccess,
+                        throwable -> onGetAllProductFailure(throwable.getMessage()));
+
+        mCompositeDisposable.add(disposable);
+
+        ((CartActivity) getActivity()).getBackButton().setOnClickListener(view -> getActivity().onBackPressed());
+    }
+
+    private void onGetAllProductFailure(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void onGetAllProductSuccess(List<Child> childList) {
+        adapter.addList(childList);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mCompositeDisposable.clear();
     }
 
     @OnClick(R.id.btn_thanh_toan)

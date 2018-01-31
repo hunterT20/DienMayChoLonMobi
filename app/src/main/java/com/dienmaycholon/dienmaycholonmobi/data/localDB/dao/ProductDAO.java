@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.data.daoRoom;
+package com.dienmaycholon.dienmaycholonmobi.data.localDB.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -10,10 +10,12 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 @Dao
-public interface ChildDAO {
+public interface ProductDAO {
     @Query("SELECT * FROM Child")
-    List<Child> getListProductCurrentBuy();
+    Flowable<List<Child>>  getListProductCurrentBuy();
 
     @Insert
     void insert(Child... children);
