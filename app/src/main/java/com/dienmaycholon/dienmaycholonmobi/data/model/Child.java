@@ -82,7 +82,7 @@ public class Child {
     @Ignore
     @Expose
     private List<ElementSpecial> elementSpecial;
-    private int count;
+    private int count = 1;
 
     public int getCount() {
         return count;

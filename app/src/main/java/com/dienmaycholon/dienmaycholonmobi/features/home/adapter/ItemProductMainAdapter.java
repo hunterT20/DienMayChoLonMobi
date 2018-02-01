@@ -1,8 +1,12 @@
 package com.dienmaycholon.dienmaycholonmobi.features.home.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.localDB.database.LocalDatabase;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.view.DetailActivity;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 import com.squareup.picasso.Picasso;
 
@@ -60,16 +66,14 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
         holder.txtvPriceDel.setPaintFlags(holder.txtvPriceDel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         holder.itemView.setOnClickListener(view -> {
-            /*Constant.id_detail = child.getIdDetail();
+            Constant.id_detail = child.getIdDetail();
             Intent intent = new Intent(context, DetailActivity.class);
-            Pair<View, String> p1 = Pair.create((View) holder.imgItemProduct, "image_product");
-            Pair<View, String> p2 = Pair.create((View) holder.txtvNameProduct, "name_product");
+            Pair<View, String> p1 = Pair.create(holder.imgItemProduct, "image_product");
+            Pair<View, String> p2 = Pair.create(holder.txtvNameProduct, "name_product");
             ActivityOptionsCompat options = makeSceneTransitionAnimation((Activity) context, p1, p2);
-            context.startActivity(intent, options.toBundle());*/
+            context.startActivity(intent, options.toBundle());
 
-            child.setCount(1);
-
-            Single.fromCallable(() -> {
+            /*Single.fromCallable(() -> {
                 LocalDatabase
                         .getInstance(context)
                         .getChildDao()
@@ -93,7 +97,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
                         public void onError(Throwable e) {
                             Log.e(TAG, "onError: " + e.getMessage());
                         }
-                    });
+                    });*/
         });
     }
 

@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -30,8 +32,8 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.Photo;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
+import com.dienmaycholon.dienmaycholonmobi.features.detail.adapter.DetailAdapter;
 import com.dienmaycholon.dienmaycholonmobi.features.error.ErrorFragment;
-import com.dienmaycholon.dienmaycholonmobi.features.detail.adapter.RecyclerViewDetailAdapter;
 import com.dienmaycholon.dienmaycholonmobi.features.detail.adapter.SliderDetailPhotoAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
@@ -68,7 +70,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     private ApiService apiService;
     private List<Photo> photoList;
     private ProductDetail productDetail;
-    private RecyclerViewDetailAdapter detailAdapter;
+    private DetailAdapter detailAdapter;
 
     public DetailFragment() {
         // Required empty public constructor
@@ -139,7 +141,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
                             }
                         });
 
-                        RecyclerViewUtil.setupRecyclerView(rcv_detail,new RecyclerViewDetailAdapter(productDetail, getActivity()),getActivity());
+                        RecyclerViewUtil.setupRecyclerView(rcv_detail,new DetailAdapter(productDetail, getActivity()),getActivity());
                         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rcv_detail.getContext(),DividerItemDecoration.VERTICAL);
                         assert getActivity() != null;
                         Drawable drawable = ContextCompat.getDrawable(getActivity(),R.drawable.custom_divider);
@@ -147,7 +149,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
                         dividerItemDecoration.setDrawable(drawable);
                         rcv_detail.addItemDecoration(dividerItemDecoration);
 
-                        detailAdapter = new RecyclerViewDetailAdapter(productDetail, getActivity());
+                        detailAdapter = new DetailAdapter(productDetail, getActivity());
                         detailAdapter.setFragmentManager(getActivity().getSupportFragmentManager());
                         rcv_detail.setAdapter(detailAdapter);
                     }
@@ -169,13 +171,18 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
                 });
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        assert getActivity() != null;
+        getActivity().getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+    }
+
     @OnClick(R.id.btnBackSub)
     public void onBackStackClick(){
         assert getActivity() != null;
         getActivity().onBackPressed();
         getActivity().supportFinishAfterTransition();
     }
-
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

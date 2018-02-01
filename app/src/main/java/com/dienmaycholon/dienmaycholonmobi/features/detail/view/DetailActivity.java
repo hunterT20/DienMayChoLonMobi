@@ -31,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public void setupToolbar(Toolbar toolbar){
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() == null) return;
+        assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }

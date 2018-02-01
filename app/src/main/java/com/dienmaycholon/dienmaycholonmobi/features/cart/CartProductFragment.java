@@ -87,6 +87,7 @@ public class CartProductFragment extends Fragment {
     }
 
     private void onGetAllProductSuccess(List<Child> childList) {
+        adapter.clear();
         adapter.addList(childList);
     }
 

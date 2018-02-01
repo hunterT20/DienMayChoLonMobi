@@ -36,7 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ProductDetail productDetail;
     private Context context;
     private FragmentManager fragmentManager;
@@ -50,7 +50,7 @@ public class RecyclerViewDetailAdapter extends RecyclerView.Adapter<RecyclerView
     private static final int TYPE_GIOI_THIEU = 6;
     private static final int TYPE_FOOTER = 9;
 
-    public RecyclerViewDetailAdapter(ProductDetail productDetail, Context context) {
+    public DetailAdapter(ProductDetail productDetail, Context context) {
         this.productDetail = productDetail;
         this.context = context;
     }
