@@ -12,23 +12,25 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.Launcher"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".features.home.view.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".features.launch.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".features.home.view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".features.search.view.SearchActivity" />
         <activity android:name=".features.detail.view.DetailActivity" />
         <activity android:name=".features.category.all.CategoryActivity" />
         <activity android:name=".features.category.detail.CategoryDetailActivity" />
-        <activity android:name=".features.cart.CartActivity"></activity>
+        <activity android:name=".features.cart.CartActivity" />
     </application>
 
 </manifest>

@@ -14,10 +14,8 @@ import android.view.ViewGroup;
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
-import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 import com.dienmaycholon.dienmaycholonmobi.features.home.adapter.ItemTangAdapter;
@@ -41,9 +39,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @BindView(R.id.lvIndex) RecyclerView lvIndex;
     @BindView(R.id.swipeRefresh)    SwipeRefreshLayout swipeRefreshLayout;
 
-    private ApiService apiService;
-    private String TOKEN;
-    private Boolean isGetToken = false;
     private ItemTangAdapter adapter;
 
     public HomeFragment() {
@@ -73,50 +68,18 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         lvIndex.setDrawingCacheEnabled(true);
         lvIndex.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
-        apiService = ApiUtils.getAPIservices();
         swipeRefreshLayout.setOnRefreshListener(this);
 
         adapter = new ItemTangAdapter(getActivity());
         adapter.setHasStableIds(true);
         RecyclerViewUtil.setupRecyclerView(lvIndex, adapter,getActivity());
 
-        getToken();
-    }
-
-    private void getToken(){
-        swipeRefreshLayout.setRefreshing(true);
-        Observable<ApiResult<String>> getToken = apiService.getToken();
-        getToken.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ApiResult<String>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(ApiResult<String> token) {
-                        Constant.Token = token.getData();
-                        TOKEN = token.getData();
-                        getBannerHome(token.getData());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        swipeRefreshLayout.setRefreshing(false);
-                        isGetToken = false;
-                        Log.e(TAG, "onError: " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        isGetToken = true;
-                    }
-                });
+        getBannerHome(Constant.Token);
     }
 
     private void getBannerHome(final String Token){
-        Observable<ApiListResult<Banner>> getBannerHome = apiService.getBannerHome(Token);
+        swipeRefreshLayout.setRefreshing(true);
+        Observable<ApiListResult<Banner>> getBannerHome = ApiUtils.getAPIservices().getBannerHome(Token);
         getBannerHome.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ApiListResult<Banner>>() {
@@ -134,7 +97,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
                     @Override
                     public void onError(Throwable e) {
-
+                        swipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
@@ -145,7 +108,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     }
 
     private void getProduct(String Token){
-        Observable<ApiListResult<ContainerProduct>> getProductMain = apiService.getContainerProduct(Token);
+        Observable<ApiListResult<ContainerProduct>> getProductMain = ApiUtils.getAPIservices().getContainerProduct(Token);
         getProductMain.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ApiListResult<ContainerProduct>>() {
@@ -177,10 +140,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public void onRefresh() {
         if (adapter != null) adapter.reset();
-        if (isGetToken){
-            getProduct(TOKEN);
-        }else {
-            getToken();
-        }
+        getBannerHome(Constant.Token);
     }
 }

@@ -65,7 +65,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
         holder.txtvPriceDel.setText(NumberTextWatcherForThousand.getDecimalFormattedString(String.valueOf(child.getDiscount())) + "đ");
         holder.txtvPriceDel.setPaintFlags(holder.txtvPriceDel.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        holder.itemView.setOnClickListener(view -> {
+        holder.itemView.setOnClickListener((View view) -> {
             Constant.id_detail = child.getIdDetail();
             Intent intent = new Intent(context, DetailActivity.class);
             Pair<View, String> p1 = Pair.create(holder.imgItemProduct, "image_product");
