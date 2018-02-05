@@ -32,7 +32,6 @@
             android:layout_marginRight="30dp"
             android:layout_marginStart="30dp"
             android:background="@android:color/transparent"
-            android:ems="10"
             android:hint="@string/tim_kiem_san_pham"
             android:imeOptions="actionSearch|flagNoExtractUi"
             android:inputType="text"

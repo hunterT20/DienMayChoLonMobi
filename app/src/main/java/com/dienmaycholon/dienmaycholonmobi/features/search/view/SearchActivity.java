@@ -6,77 +6,84 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
+import com.dienmaycholon.dienmaycholonmobi.data.Constant;
+import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
+import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.features.home.adapter.ItemProductMainAdapter;
 import com.dienmaycholon.dienmaycholonmobi.features.search.adapter.ItemProductSearchAdapter;
 import com.dienmaycholon.dienmaycholonmobi.util.RecyclerViewUtil;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class SearchActivity extends AppCompatActivity {
-    private ImageView imvBack_Search;
-    private ImageView imvBarcode;
-    private EditText edtSearch;
-    private RecyclerView rcvProductSearch;
+    private static final String TAG = SearchActivity.class.getSimpleName();
+    @BindView(R.id.edtSearch) EditText edtSearch;
+    @BindView(R.id.rcvProductSearch) RecyclerView rcvProductSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
         setContentView(R.layout.search_activity);
-
-        addViews();
-        addEvents();
+        ButterKnife.bind(this);
     }
 
-    private void addEvents() {
-        imvBack_Search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        edtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() > 3){
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            rcvProductSearch.setVisibility(View.VISIBLE);
-                        }
-                    },1000);
-                }else if (editable.length() == 0){
-                       rcvProductSearch.setVisibility(View.GONE);
-                }
-            }
-        });
+    @OnClick(R.id.imvBack_Search)
+    public void onBackClick(){
+        onBackPressed();
     }
 
-    private void addViews() {
-        imvBack_Search = findViewById(R.id.imvBack_Search);
-        imvBarcode = findViewById(R.id.imvBarcode);
-        edtSearch = findViewById(R.id.edtSearch);
-        rcvProductSearch = findViewById(R.id.rcvProductSearch);
+    @OnClick(R.id.imvBarcode)
+    public void onBarcodeClick(){
 
-        /*RecyclerViewUtil.setupRecyclerViewGrid(rcvProductSearch,new ItemProductMainAdapter(productList,this),this);
+    }
 
-        ItemProductSearchAdapter adapter = new ItemProductSearchAdapter(productList,this);
-        adapter.setHasStableIds(true);
-        rcvProductSearch.setAdapter(adapter);*/
+    private void search(String key, String token){
+        Observable<ApiListResult<Child>> getSearch = ApiUtils.getAPIservices().getSearch(key, token);
+        getSearch.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<ApiListResult<Child>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(ApiListResult<Child> childApiListResult) {
+                        Log.e(TAG, "onNext: " + childApiListResult.getData().size());
+                        /*RecyclerViewUtil.setupRecyclerViewGrid(rcvProductSearch,new ItemProductMainAdapter(productList,this),this);
+
+                        ItemProductSearchAdapter adapter = new ItemProductSearchAdapter(productList,this);
+                        adapter.setHasStableIds(true);
+                        rcvProductSearch.setAdapter(adapter);*/
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

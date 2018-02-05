@@ -33,6 +33,9 @@ public interface ApiService {
     @GET("containerproduct")
     Observable<ApiListResult<ContainerProduct>> getContainerProduct(@Query("token") String token);
 
+    @GET("searchajax/page/3")
+    Observable<ApiListResult<Child>> getSearch(@Query("key") String key, @Query("token") String token);
+
     @GET("getsubcategory/cate/{alias}")
     Observable<ApiResult<CategoryDetail>> getCategoryParent(
             @Path(value = "alias", encoded = true) String alias,
