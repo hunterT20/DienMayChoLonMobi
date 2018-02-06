@@ -8,4 +8,9 @@
     <color name="colorToolbar">#F7EF43</color>
     <color name="colorTinhNang">#dadada</color>
     <color name="colorCategoryParent">#EFF0F5</color>
+
+    <color name="Login_Phone">#0aa553</color>
+    <color name="Login_face">#3b5998</color>
+    <color name="Login_google">#DE5144</color>
+    <color name="Login_drawable">#b7b7b7</color>
 </resources>

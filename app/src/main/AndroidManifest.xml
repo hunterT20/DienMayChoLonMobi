@@ -15,8 +15,8 @@
         android:theme="@style/AppTheme.Launcher"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:label="@string/app_name"
-            android:name=".features.launch.LaunchActivity">
+            android:name=".features.launch.LaunchActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,6 +31,7 @@
         <activity android:name=".features.category.all.CategoryActivity" />
         <activity android:name=".features.category.detail.CategoryDetailActivity" />
         <activity android:name=".features.cart.CartActivity" />
+        <activity android:name=".features.login.LoginActivity" />
     </application>
 
 </manifest>

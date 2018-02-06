@@ -33,4 +33,19 @@
     <style name="SpinnerTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/bg_spinner</item>
     </style>
+
+    <style name="Button" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="Button.Green">
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">#04A008</item>
+    </style>
+
+    <style name="Button.Blue">
+        <item name="android:textColor">#fff</item>
+        <item name="android:background">#0054A6</item>
+    </style>
 </resources>

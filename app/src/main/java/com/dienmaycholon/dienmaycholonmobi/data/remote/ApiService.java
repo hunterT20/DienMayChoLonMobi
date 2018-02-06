@@ -8,6 +8,7 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryChild;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
+import com.dienmaycholon.dienmaycholonmobi.data.model.DataSearch;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 
 import io.reactivex.Observable;
@@ -34,7 +35,7 @@ public interface ApiService {
     Observable<ApiListResult<ContainerProduct>> getContainerProduct(@Query("token") String token);
 
     @GET("searchajax/page/3")
-    Observable<ApiListResult<Child>> getSearch(@Query("key") String key, @Query("token") String token);
+    Observable<ApiResult<DataSearch>> getSearch(@Query("key") String key, @Query("token") String token);
 
     @GET("getsubcategory/cate/{alias}")
     Observable<ApiResult<CategoryDetail>> getCategoryParent(
