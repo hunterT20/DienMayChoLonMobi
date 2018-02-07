@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +16,12 @@ import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
-import com.dienmaycholon.dienmaycholonmobi.data.localDB.database.LocalDatabase;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.features.detail.view.DetailActivity;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import io.reactivex.Single;
-import io.reactivex.SingleObserver;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v4.app.ActivityOptionsCompat.makeSceneTransitionAnimation;
 

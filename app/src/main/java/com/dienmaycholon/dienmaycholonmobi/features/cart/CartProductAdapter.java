@@ -12,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
-import com.dienmaycholon.dienmaycholonmobi.data.localDB.database.LocalDatabase;
+import com.dienmaycholon.dienmaycholonmobi.data.local.database.LocalDatabase;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.util.NumberTextWatcherForThousand;
 import com.squareup.picasso.Picasso;

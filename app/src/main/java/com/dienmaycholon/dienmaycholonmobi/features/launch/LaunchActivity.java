@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.dienmaycholon.dienmaycholonmobi.features.home.view.MainActivity;
 
@@ -34,17 +34,17 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     private void getToken(){
-        Observable<ApiResult<String>> getToken = ApiUtils.getAPIservices().getToken();
+        Observable<ApiResult<String, Integer>> getToken = ApiUtils.getAPIservices().getToken();
         getToken.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ApiResult<String>>() {
+                .subscribe(new Observer<ApiResult<String, Integer>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ApiResult<String> token) {
+                    public void onNext(ApiResult<String, Integer> token) {
                         Constant.Token = token.getData();
                     }
 

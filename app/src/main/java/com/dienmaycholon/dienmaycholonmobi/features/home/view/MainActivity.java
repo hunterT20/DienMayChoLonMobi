@@ -13,11 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.features.cart.CartActivity;
 import com.dienmaycholon.dienmaycholonmobi.features.category.all.CategoryActivity;
+import com.dienmaycholon.dienmaycholonmobi.features.login.LoginActivity;
 import com.dienmaycholon.dienmaycholonmobi.features.search.view.SearchActivity;
 
 import butterknife.BindView;
@@ -31,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @BindView(R.id.txtvSearch) TextView txtvSearch;
     @BindView(R.id.nav_view) NavigationView navigationView;
 
+    private LinearLayout nav_header_main;
+    private LinearLayout lnl_login;
+    private Button btn_login;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ButterKnife.bind(this);
 
         addViews();
+        addEvents();
         callFragment(new HomeFragment());
     }
 
@@ -49,6 +58,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        View header = navigationView.getHeaderView(0);
+        nav_header_main = header.findViewById(R.id.nav_header_main);
+        lnl_login = header.findViewById(R.id.lnl_login);
+        btn_login = header.findViewById(R.id.btn_login);
+    }
+
+    private void addEvents() {
+        btn_login.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        });
     }
 
     @Override

@@ -27,7 +27,7 @@ import android.widget.TextView;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Photo;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
@@ -101,17 +101,17 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
 
     private void getProductDetail(String IDdetail, String Token){
         swipeRefresh.setRefreshing(true);
-        Observable<ApiResult<ProductDetail>> getProductDetail = apiService.getProductDetail(IDdetail, Token);
+        Observable<ApiResult<ProductDetail, Integer>> getProductDetail = apiService.getProductDetail(IDdetail, Token);
         getProductDetail.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ApiResult<ProductDetail>>() {
+                .subscribe(new Observer<ApiResult<ProductDetail, Integer>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ApiResult<ProductDetail> productDetailApiResult) {
+                    public void onNext(ApiResult<ProductDetail, Integer> productDetailApiResult) {
                         productDetail = productDetailApiResult.getData();
 
                         txtv_product_name.setText(productDetail.getProduct().getName());

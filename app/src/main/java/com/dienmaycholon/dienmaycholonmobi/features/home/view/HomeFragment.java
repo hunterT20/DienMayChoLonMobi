@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ApiListResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiListResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;

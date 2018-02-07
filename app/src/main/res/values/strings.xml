@@ -33,4 +33,5 @@
 
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
+    <string name="vui_long_dang_nhap">Vui lòng đăng nhập</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.data.localDB.dao;
+package com.dienmaycholon.dienmaycholonmobi.data.local.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;

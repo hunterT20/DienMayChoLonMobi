@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryDetail;
 import com.dienmaycholon.dienmaycholonmobi.data.model.CategoryDetailProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiService;
@@ -58,17 +58,17 @@ public class CategoryDetailFragment extends Fragment {
     }
 
     private void addViews() {
-        Observable<ApiResult<CategoryDetail>> getCategoryDetail = apiService.getCategoryParent(Constant.alias,Constant.Token);
+        Observable<ApiResult<CategoryDetail, Integer>> getCategoryDetail = apiService.getCategoryParent(Constant.alias,Constant.Token);
         getCategoryDetail.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ApiResult<CategoryDetail>>() {
+                .subscribe(new Observer<ApiResult<CategoryDetail, Integer>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ApiResult<CategoryDetail> categoryDetailApiResult) {
+                    public void onNext(ApiResult<CategoryDetail, Integer> categoryDetailApiResult) {
                         Log.e(TAG, "onNext: " + categoryDetailApiResult.getData().getName());
                         CategoryDetail categoryDetail = categoryDetailApiResult.getData();
                         List<CategoryDetailProduct> productList = categoryDetail.getCategoryDetailProducts();

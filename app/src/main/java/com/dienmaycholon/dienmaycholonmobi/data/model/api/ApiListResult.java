@@ -1,4 +1,4 @@
-package com.dienmaycholon.dienmaycholonmobi.data.model;
+package com.dienmaycholon.dienmaycholonmobi.data.model.api;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

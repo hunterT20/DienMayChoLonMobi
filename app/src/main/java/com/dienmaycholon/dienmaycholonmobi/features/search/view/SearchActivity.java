@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
-import com.dienmaycholon.dienmaycholonmobi.data.model.ApiResult;
+import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
 import com.dienmaycholon.dienmaycholonmobi.data.model.DataSearch;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
@@ -54,17 +54,18 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void search(String key, String token) {
-        Observable<ApiResult<DataSearch>> getSearch = ApiUtils.getAPIservices().getSearch(key, token);
+        Observable<ApiResult<DataSearch, Integer>> getSearch = ApiUtils.getAPIservices().getSearch(key, token);
         getSearch.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ApiResult<DataSearch>>() {
+                .subscribe(new Observer<ApiResult<DataSearch, Integer>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+
 
                     }
 
                     @Override
-                    public void onNext(ApiResult<DataSearch> dataSearchApiResult) {
+                    public void onNext(ApiResult<DataSearch, Integer> dataSearchApiResult) {
                         List<Child> childList = dataSearchApiResult.getData().getItems();
 
                         ItemProductSearchAdapter adapter = new ItemProductSearchAdapter(SearchActivity.this);

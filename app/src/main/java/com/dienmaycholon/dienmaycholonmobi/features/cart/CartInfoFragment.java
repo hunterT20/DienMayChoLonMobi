@@ -35,12 +35,8 @@ public class CartInfoFragment extends Fragment {
         assert getActivity() != null;
         ((CartActivity)getActivity()).setTitleToolbar("Thông tin giao hàng");
 
-        ((CartActivity)getActivity()).getBackButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((CartActivity) getActivity()).callFragment(new CartProductFragment());
-            }
-        });
+        ((CartActivity)getActivity()).getBackButton().setOnClickListener(view -> (
+                (CartActivity) getActivity()).callFragment(new CartProductFragment()));
     }
 
 }
