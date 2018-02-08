@@ -16,6 +16,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -43,6 +44,15 @@ public interface ApiService {
     Observable<ApiResult<DataLoginDMCL, Integer>> loginDmcl(
             @Path(value = "username", encoded = true) String username,
             @Path(value = "password", encoded = true) String password,
+            @Query("token") String token
+    );
+
+    @GET("loginfacebook/first_name/{first_name}/last_name/{last_name}/id/{id}/email/{email}")
+    Observable<ApiResult<String, Integer>> loginFacebook(
+            @Path(value = "first_name", encoded = true) String FirstName,
+            @Path(value = "last_name", encoded = true) String LastName,
+            @Path(value = "id", encoded = true) String ID,
+            @Path(value = "email", encoded = true) String email,
             @Query("token") String token
     );
 
