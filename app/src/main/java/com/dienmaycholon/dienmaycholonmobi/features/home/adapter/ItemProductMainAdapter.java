@@ -65,31 +65,7 @@ public class ItemProductMainAdapter extends RecyclerView.Adapter<ItemProductMain
             ActivityOptionsCompat options = makeSceneTransitionAnimation((Activity) context, p1, p2);
             context.startActivity(intent, options.toBundle());
 
-            /*Single.fromCallable(() -> {
-                LocalDatabase
-                        .getInstance(context)
-                        .getChildDao()
-                        .insert(child);
-                return "Lưu dữ liệu thành công";
-            })
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<String>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onSuccess(String s) {
-                            Log.e(TAG, "onSuccess: " + s);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e(TAG, "onError: " + e.getMessage());
-                        }
-                    });*/
+            Constant.child = child;
         });
     }
 

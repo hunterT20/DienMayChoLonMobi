@@ -73,7 +73,6 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
     private DetailAdapter detailAdapter;
 
     public DetailFragment() {
-        // Required empty public constructor
     }
 
 
@@ -95,6 +94,7 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
         ((DetailActivity) getActivity()).setupToolbar(toolbar);
         main_appbar.addOnOffsetChangedListener(this);
         startAlphaAnimation(txtv_title_detail_toolbar, 0, View.INVISIBLE);
+        ((DetailActivity)getActivity()).getButtonCart().setVisibility(View.GONE);
 
         getProductDetail(Constant.id_detail, Constant.Token);
     }
@@ -167,6 +167,8 @@ public class DetailFragment extends Fragment implements AppBarLayout.OnOffsetCha
                     public void onComplete() {
                         swipeRefresh.setRefreshing(false);
                         swipeRefresh.setEnabled(false);
+                        assert getActivity() != null;
+                        ((DetailActivity)getActivity()).getButtonCart().setVisibility(View.VISIBLE);
                     }
                 });
     }
