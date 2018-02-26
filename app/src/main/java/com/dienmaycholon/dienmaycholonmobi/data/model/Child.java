@@ -82,7 +82,28 @@ public class Child {
     @Ignore
     @Expose
     private List<ElementSpecial> elementSpecial;
+    @SerializedName("color")
+    @Ignore
+    @Expose
+    private List<Color> colors;
     private int count = 1;
+    private int colorChoose;
+
+    public int getColorChoose() {
+        return colorChoose;
+    }
+
+    public void setColorChoose(int colorChoose) {
+        this.colorChoose = colorChoose;
+    }
+
+    public List<Color> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<Color> colors) {
+        this.colors = colors;
+    }
 
     public int getCount() {
         return count;

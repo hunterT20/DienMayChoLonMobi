@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
 import com.dienmaycholon.dienmaycholonmobi.data.model.DataLoginDMCL;
+import com.dienmaycholon.dienmaycholonmobi.data.model.User;
+import com.dienmaycholon.dienmaycholonmobi.data.model.api.AccessTokenFacebook;
 import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.remote.ApiUtils;
 import com.facebook.AccessToken;
@@ -38,6 +40,7 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -177,25 +180,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             @Override
             public void onSuccess(LoginResult loginResult) {
                 CHECK_PROVIDER_LOGIN = 2;
-
-                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
-                        (object, response) -> {
-                            try {
-                                String id = object.getString("id");
-                                String firtsname = object.getString("first_name");
-                                String lastname = object.getString("last_name");
-                                String email = object.getString("email");
-
-                                eventLoginFacebook(id,lastname,firtsname, email);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        });
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, first_name, last_name, email");
-                request.setParameters(parameters);
-                request.executeAsync();
+                AccessTokenFacebook accessToken = new AccessTokenFacebook();
+                accessToken.setAccessToken(loginResult.getAccessToken().getToken());
+                eventLoginFacebook(accessToken);
             }
 
             @Override
@@ -210,32 +197,31 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         };
     }
 
-    private void eventLoginFacebook(String id, String lastname, String firstname, String email){
-        Observable<ApiResult<String, Integer>> loginFacebook = ApiUtils.getAPIservices()
-                .loginFacebook(firstname,lastname,id,email,Constant.Token);
+    private void eventLoginFacebook(AccessTokenFacebook accessToken){
+        Observable<ApiResult<User, Integer>> loginFacebook = ApiUtils.getAPIservices()
+                .loginFacebook(accessToken);
 
         loginFacebook.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ApiResult<String, Integer>>() {
+                .subscribe(new Observer<ApiResult<User, Integer>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(ApiResult<String, Integer> data) {
+                    public void onNext(ApiResult<User, Integer> data) {
                         Log.e(TAG, "onNext: " + String.valueOf(data));
                         Log.e(TAG, "onNext: " + data.getMessage());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "onError: " + e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
     }

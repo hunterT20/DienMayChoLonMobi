@@ -1,5 +1,6 @@
 package com.dienmaycholon.dienmaycholonmobi.data.remote;
 
+import com.dienmaycholon.dienmaycholonmobi.data.model.User;
 import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiListResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.api.ApiResult;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Banner;
@@ -10,12 +11,15 @@ import com.dienmaycholon.dienmaycholonmobi.data.model.ContainerProduct;
 import com.dienmaycholon.dienmaycholonmobi.data.model.DataLoginDMCL;
 import com.dienmaycholon.dienmaycholonmobi.data.model.DataSearch;
 import com.dienmaycholon.dienmaycholonmobi.data.model.ProductDetail;
+import com.dienmaycholon.dienmaycholonmobi.data.model.api.AccessTokenFacebook;
 
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -47,15 +51,6 @@ public interface ApiService {
             @Query("token") String token
     );
 
-    @GET("loginfacebook/first_name/{first_name}/last_name/{last_name}/id/{id}/email/{email}")
-    Observable<ApiResult<String, Integer>> loginFacebook(
-            @Path(value = "first_name", encoded = true) String FirstName,
-            @Path(value = "last_name", encoded = true) String LastName,
-            @Path(value = "id", encoded = true) String ID,
-            @Path(value = "email", encoded = true) String email,
-            @Query("token") String token
-    );
-
     @GET("getsubcategory/cate/{alias}")
     Observable<ApiResult<CategoryDetail, Integer>> getCategoryParent(
             @Path(value = "alias", encoded = true) String alias,
@@ -76,6 +71,11 @@ public interface ApiService {
     @POST("cart")
     Observable<ApiResult<String, Integer>> postCart(
             @Query("token") String token,
-            @Body Child child
+            @Body HashMap<String,String> body
+    );
+
+    @POST("loginfacebook")
+    Observable<ApiResult<User, Integer>> loginFacebook(
+            @Body AccessTokenFacebook accessToken
     );
 }
