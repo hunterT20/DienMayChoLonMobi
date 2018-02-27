@@ -25,16 +25,16 @@ public class User {
     private String fullname;
     @SerializedName("phone")
     @Expose
-    private Object phone;
+    private String phone;
     @SerializedName("myday")
     @Expose
     private String myday;
     @SerializedName("mymonth")
     @Expose
-    private Object mymonth;
+    private String mymonth;
     @SerializedName("myyear")
     @Expose
-    private Object myyear;
+    private String myyear;
     @SerializedName("city")
     @Expose
     private String city;
@@ -51,7 +51,7 @@ public class User {
     @Expose
     private String gettoken;
 
-    public User(@NonNull String id, String username, String email, String fullname, Object phone, String myday, Object mymonth, Object myyear, String city, String address, String dateLogin, String dateCreated, String gettoken) {
+    public User(@NonNull String id, String username, String email, String fullname, String phone, String myday, String mymonth, String myyear, String city, String address, String dateLogin, String dateCreated, String gettoken) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -100,11 +100,11 @@ public class User {
         this.fullname = fullname;
     }
 
-    public Object getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Object phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -116,19 +116,19 @@ public class User {
         this.myday = myday;
     }
 
-    public Object getMymonth() {
+    public String getMymonth() {
         return mymonth;
     }
 
-    public void setMymonth(Object mymonth) {
+    public void setMymonth(String mymonth) {
         this.mymonth = mymonth;
     }
 
-    public Object getMyyear() {
+    public String getMyyear() {
         return myyear;
     }
 
-    public void setMyyear(Object myyear) {
+    public void setMyyear(String myyear) {
         this.myyear = myyear;
     }
 

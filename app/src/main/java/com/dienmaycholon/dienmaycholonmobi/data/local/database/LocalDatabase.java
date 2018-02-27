@@ -6,9 +6,11 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import com.dienmaycholon.dienmaycholonmobi.data.local.dao.ProductDAO;
+import com.dienmaycholon.dienmaycholonmobi.data.local.dao.UserDAO;
 import com.dienmaycholon.dienmaycholonmobi.data.model.Child;
+import com.dienmaycholon.dienmaycholonmobi.data.model.User;
 
-@Database(entities = {Child.class}, version = 1, exportSchema = false)
+@Database(entities = {Child.class, User.class}, version = 2, exportSchema = false)
 public abstract class LocalDatabase extends RoomDatabase {
 
     private static final String DB_NAME = "dmclLocal.db";
@@ -26,4 +28,6 @@ public abstract class LocalDatabase extends RoomDatabase {
     }
 
     public abstract ProductDAO getChildDao();
+
+    public abstract UserDAO getUserDao();
 }

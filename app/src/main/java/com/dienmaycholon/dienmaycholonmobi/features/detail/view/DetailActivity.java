@@ -61,6 +61,7 @@ public class DetailActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         Log.e(TAG, "onError: " + e.getMessage());
+                        Toast.makeText(DetailActivity.this, "Sản phẩm đã có trong giỏ hàng!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

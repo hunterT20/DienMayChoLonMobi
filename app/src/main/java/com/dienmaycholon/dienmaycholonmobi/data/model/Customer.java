@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 @Entity
 public class Customer {
-    private int sex;
+    private int gender;
     private String name;
     @PrimaryKey
     @NonNull
@@ -27,8 +27,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(CustomerBuilder customerBuilder) {
-        this.sex = customerBuilder.sex;
+    Customer(CustomerBuilder customerBuilder) {
+        this.gender = customerBuilder.gender;
         this.name = customerBuilder.name;
         this.phone = customerBuilder.phone;
         this.email = customerBuilder.email;
@@ -45,8 +45,8 @@ public class Customer {
         this.getday = customerBuilder.getday;
     }
 
-    public int getSex() {
-        return sex;
+    public int getGender() {
+        return gender;
     }
 
     public String getName() {
@@ -107,7 +107,7 @@ public class Customer {
     }
 
     public static class CustomerBuilder{
-        private int sex;
+        private int gender;
         private String name;
         private String phone;
         private String email;
@@ -130,8 +130,8 @@ public class Customer {
             return new Customer(this);
         }
 
-        public CustomerBuilder setSex(int sex) {
-            this.sex = sex;
+        public CustomerBuilder setGender(int gender) {
+            this.gender = gender;
             return this;
         }
 

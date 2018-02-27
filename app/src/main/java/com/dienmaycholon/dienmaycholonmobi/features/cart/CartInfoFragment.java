@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
@@ -33,7 +31,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.content.ContentValues.TAG;
@@ -134,7 +131,7 @@ public class CartInfoFragment extends Fragment {
 
     private Customer createDataCustomer(){
         return new Customer.CustomerBuilder()
-                .setSex(1)
+                .setGender(1)
                 .setName("Ngô Thanh Tuấn")
                 .setPhone("01669384803")
                 .setEmail("thanhtuan200295@gmail.com")

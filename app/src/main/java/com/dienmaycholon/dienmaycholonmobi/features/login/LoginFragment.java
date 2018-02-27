@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.dienmaycholon.dienmaycholonmobi.R;
 import com.dienmaycholon.dienmaycholonmobi.data.Constant;
+import com.dienmaycholon.dienmaycholonmobi.data.local.database.LocalDatabase;
 import com.dienmaycholon.dienmaycholonmobi.data.model.DataLoginDMCL;
 import com.dienmaycholon.dienmaycholonmobi.data.model.User;
 import com.dienmaycholon.dienmaycholonmobi.data.model.api.AccessTokenFacebook;
@@ -47,9 +48,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Single;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.dienmaycholon.dienmaycholonmobi.data.Constant.child;
 
 public class LoginFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener{
     private static final String TAG = LoginFragment.class.getSimpleName();
@@ -211,8 +216,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
                     @Override
                     public void onNext(ApiResult<User, Integer> data) {
-                        Log.e(TAG, "onNext: " + String.valueOf(data));
-                        Log.e(TAG, "onNext: " + data.getMessage());
+                        Constant.Token = data.getData().getGettoken();
+                        saveInfoUser(data.getData());
+                        Toast.makeText(getActivity(), data.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -222,6 +228,36 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
                     @Override
                     public void onComplete() {
+                        assert getActivity() != null;
+                        getActivity().finish();
+                    }
+                });
+    }
+
+    private void saveInfoUser(User user){
+        Single.fromCallable(() -> {
+            LocalDatabase
+                    .getInstance(getActivity())
+                    .getUserDao()
+                    .insert(user);
+            return "Lưu thông tin user thành công!";
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(String s) {
+                        Log.e(TAG, "onSuccess: " + s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.getMessage());
                     }
                 });
     }
