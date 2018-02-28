@@ -2,6 +2,7 @@ package com.dienmaycholon.dienmaycholonmobi.util;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import io.reactivex.Observable;
@@ -15,7 +16,6 @@ public class RxSearchObservable {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
@@ -25,8 +25,14 @@ public class RxSearchObservable {
 
             @Override
             public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        editText.setOnEditorActionListener((textView, actionID, keyEvent) -> {
+            if (actionID == EditorInfo.IME_ACTION_SEARCH){
                 subject.onComplete();
             }
+            return false;
         });
 
         return subject;

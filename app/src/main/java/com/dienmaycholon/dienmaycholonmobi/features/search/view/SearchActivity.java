@@ -1,6 +1,7 @@
 package com.dienmaycholon.dienmaycholonmobi.features.search.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -54,11 +55,19 @@ public class SearchActivity extends AppCompatActivity {
     private void addEvents() {
         RxSearchObservable.fromView(edtSearch)
                 .debounce(300, TimeUnit.MILLISECONDS)
-                .filter(text -> !text.isEmpty())
+                .filter(text -> {
+                    if (text.isEmpty()) {
+                        Log.e(TAG, "test: empty");
+                        return false;
+                    } else {
+                        return true;
+                    }
+                })
                 .distinctUntilChanged()
+                .switchMap(this::dataFromNetwork)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> Log.e(TAG, "accept: " + result));
+                .subscribe(result -> search(result, Constant.Token));
     }
 
     @OnClick(R.id.imvBack_Search)
@@ -68,10 +77,15 @@ public class SearchActivity extends AppCompatActivity {
 
     @OnClick(R.id.imvBarcode)
     public void onBarcodeClick() {
-
     }
 
-    private Observable search(String key, String token) {
+    private Observable<String> dataFromNetwork(final String query) {
+        return Observable.just(true)
+                .delay(1, TimeUnit.SECONDS)
+                .map(value -> query);
+    }
+
+    private void search(String key, String token) {
         Observable<ApiResult<DataSearch, Integer>> getSearch = ApiUtils.getAPIservices().getSearch(key, token);
         getSearch.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -86,6 +100,7 @@ public class SearchActivity extends AppCompatActivity {
                     public void onNext(ApiResult<DataSearch, Integer> dataSearchApiResult) {
                         List<Child> childList = dataSearchApiResult.getData().getItems();
 
+                        Log.e(TAG, "onNext: " + childList.size());
                         ItemProductSearchAdapter adapter = new ItemProductSearchAdapter(SearchActivity.this);
                         adapter.setHasStableIds(true);
                         adapter.addList(childList);
@@ -94,7 +109,7 @@ public class SearchActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "onError: " + e.getMessage());
                     }
 
                     @Override
@@ -102,8 +117,6 @@ public class SearchActivity extends AppCompatActivity {
 
                     }
                 });
-
-        return getSearch;
     }
 
     @Override

@@ -41,6 +41,7 @@ public class ItemProductSearchAdapter extends RecyclerView.Adapter<ItemProductSe
     }
 
     public void addList(List<Child> listItems) {
+        if (listItems == null) return;
         this.listItems.addAll(listItems);
         notifyDataSetChanged();
     }
@@ -76,6 +77,7 @@ public class ItemProductSearchAdapter extends RecyclerView.Adapter<ItemProductSe
 
     @Override
     public int getItemCount() {
+        if (listItems == null) return 0;
         return listItems.size();
     }
 
