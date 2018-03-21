@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -92,7 +93,7 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return null;
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "SetJavaScriptEnabled"})
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Product product = productDetail.getProduct();
@@ -183,9 +184,11 @@ public class DetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 }
             });
+            gioiThieuViewHolder.webview_gioithieu.setWebViewClient(new WebViewClient());
             gioiThieuViewHolder.webview_gioithieu.getSettings().setLoadsImagesAutomatically(true);
+            gioiThieuViewHolder.webview_gioithieu.getSettings().setJavaScriptEnabled(true);
             gioiThieuViewHolder.webview_gioithieu.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-            gioiThieuViewHolder.webview_gioithieu.loadData(product.getContent(), "text/html", null);
+            gioiThieuViewHolder.webview_gioithieu.loadUrl(product.getContent());
 
         }
     }
